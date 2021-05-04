@@ -36,7 +36,7 @@ class Decoder implements JwtDecoder
             ->setJoseParams($joseParams)
             ->setClaims($claims)
             ->setSignature($signature)
-            ->create()
+            ->build()
         ;
     }
 

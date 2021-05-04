@@ -20,7 +20,7 @@ class BuilderTest extends BaseCase
 
         $builder = new Builder();
         $builder->setJoseParam($jose, $joseValue);
-        $token = $builder->create();
+        $token = $builder->build();
 
         $this->assertSame(
             $joseValue,
@@ -35,7 +35,7 @@ class BuilderTest extends BaseCase
 
         $builder = new Builder();
         $builder->setJoseParams([$jose => $joseValue]);
-        $token = $builder->create();
+        $token = $builder->build();
 
         $this->assertSame(
             $joseValue,
@@ -50,7 +50,7 @@ class BuilderTest extends BaseCase
 
         $builder = new Builder();
         $builder->setClaim($claim, $claimValue);
-        $token = $builder->create();
+        $token = $builder->build();
 
         $this->assertSame(
             $claimValue,
@@ -65,7 +65,7 @@ class BuilderTest extends BaseCase
 
         $builder = new Builder();
         $builder->setClaims([$claim => $claimValue]);
-        $token = $builder->create();
+        $token = $builder->build();
 
         $this->assertSame(
             $claimValue,
@@ -79,7 +79,7 @@ class BuilderTest extends BaseCase
 
         $builder = new Builder();
         $builder->setSignature($signature);
-        $token = $builder->create();
+        $token = $builder->build();
 
         $this->assertSame(
             $signature,
@@ -121,7 +121,7 @@ class BuilderTest extends BaseCase
         $builder->signWith($signer);
         $builder->setClaim($claim, $claimValue);
         $builder->setJoseParam($jose, $joseValue);
-        $token = $builder->create();
+        $token = $builder->build();
 
         $this->assertSame(
             $signature,

@@ -42,10 +42,10 @@ $privateKey = new SecretFile('path/to/private.key');
 $signer = new RsaSha512Signer($publicKey, $privateKey);
 
 $constraints = [
-    new ExpirationConstraint(3), // checks that token is not expired with 3s leeway
-    new NotBeforeConstraint(3), // checks nbf header with 3s leeway
+    new ExpirationConstraint(3),          // checks that token is not expired with 3s leeway
+    new NotBeforeConstraint(3),           // checks nbf header with 3s leeway
     new AudienceConstraint('my_service'), // checks that token was issued for this service
-    new SignatureConstraint($signer), //checks signature
+    new SignatureConstraint($signer),     // checks signature
 ];
 
 $res = JwtFactory::validator()->validate($token, $constraints);
@@ -62,11 +62,11 @@ if ($res->isValid()) {
 
 ```php
 // jose params
-$alg = $token->jose()->getAlg(); // registered JOSE params have own getters
+$alg = $token->jose()->getAlg();                   // registered JOSE params have own getters
 $customParam = $token->jose()->get('custom_jose'); // any custom JOSE param from the payload
 
 // claims
-$iss = $token->claims()->getIss(); // registered claims have own getters
+$iss = $token->claims()->getIss();                    // registered claims have own getters
 $customClaim = $token->claims()->get('custom_claim'); // any custom claim from the payload
 ```
 
@@ -84,9 +84,10 @@ $privateKey = new SecretFile('path/to/private.key');
 $signer = new RsaSha512Signer($publicKey, $privateKey);
 
 $token = JwtFactory::builder()
-    ->setJoseParam('test', 'test')
-    ->setClaim('test', 'test')
-    ->signWith($signer)
+    ->setJoseParam('test', 'test') // any custom JOSE param
+    ->setIss('test')               // registered claims have own setters
+    ->setClaim('test', 'test')     // any custom claim
+    ->signWith($signer)            // signer
     ->create()
 ;
 ```

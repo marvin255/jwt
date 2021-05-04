@@ -56,7 +56,7 @@ class DecoderTest extends BaseCase
             ->willReturn($builder)
         ;
         $builder->expects($this->once())
-            ->method('create')
+            ->method('build')
             ->willReturn($awaitedToken)
         ;
 

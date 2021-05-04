@@ -72,6 +72,76 @@ class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    public function setIss(string $iss): JwtBuilder
+    {
+        $this->claims[ClaimSet::ISS] = $iss;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setSub(string $sub): JwtBuilder
+    {
+        $this->claims[ClaimSet::SUB] = $sub;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setAud(mixed $aud): JwtBuilder
+    {
+        $this->claims[ClaimSet::AUD] = $aud;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setExp(int $exp): JwtBuilder
+    {
+        $this->claims[ClaimSet::EXP] = $exp;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setNbf(int $nbf): JwtBuilder
+    {
+        $this->claims[ClaimSet::NBF] = $nbf;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setIat(int $iat): JwtBuilder
+    {
+        $this->claims[ClaimSet::IAT] = $iat;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setJti(string $jti): JwtBuilder
+    {
+        $this->claims[ClaimSet::JTI] = $jti;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setSignature(string $signature): JwtBuilder
     {
         $this->signature = $signature;
@@ -92,7 +162,7 @@ class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
-    public function create(): Jwt
+    public function build(): Jwt
     {
         $jose = $this->jose;
         $claims = $this->claims;
