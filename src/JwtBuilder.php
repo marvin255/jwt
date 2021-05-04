@@ -50,6 +50,69 @@ interface JwtBuilder
     public function setClaims(array $claims): JwtBuilder;
 
     /**
+     * Sets iss claim value.
+     *
+     * @param string $iss
+     *
+     * @return JwtBuilder
+     */
+    public function setIss(string $iss): JwtBuilder;
+
+    /**
+     * Sets sub claim value.
+     *
+     * @param string $sub
+     *
+     * @return JwtBuilder
+     */
+    public function setSub(string $sub): JwtBuilder;
+
+    /**
+     * Sets aud claim value.
+     *
+     * @param mixed $aud
+     *
+     * @return JwtBuilder
+     */
+    public function setAud(mixed $aud): JwtBuilder;
+
+    /**
+     * Sets exp claim value.
+     *
+     * @param int $exp
+     *
+     * @return JwtBuilder
+     */
+    public function setExp(int $exp): JwtBuilder;
+
+    /**
+     * Sets nbf claim value.
+     *
+     * @param int $nbf
+     *
+     * @return JwtBuilder
+     */
+    public function setNbf(int $nbf): JwtBuilder;
+
+    /**
+     * Sets iat claim value.
+     *
+     * @param int $iat
+     *
+     * @return JwtBuilder
+     */
+    public function setIat(int $iat): JwtBuilder;
+
+    /**
+     * Sets jti claim value.
+     *
+     * @param string $jti
+     *
+     * @return JwtBuilder
+     */
+    public function setJti(string $jti): JwtBuilder;
+
+    /**
      * Sets signature.
      *
      * @param string $signature
@@ -72,5 +135,5 @@ interface JwtBuilder
      *
      * @return Jwt
      */
-    public function create(): Jwt;
+    public function build(): Jwt;
 }
