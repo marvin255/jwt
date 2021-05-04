@@ -73,6 +73,104 @@ class BuilderTest extends BaseCase
         );
     }
 
+    public function testSetIss(): void
+    {
+        $claimValue = 'test_value';
+
+        $builder = new Builder();
+        $builder->setIss($claimValue);
+        $token = $builder->build();
+
+        $this->assertSame(
+            $claimValue,
+            $token->claims()->getIss()
+        );
+    }
+
+    public function testSetSub(): void
+    {
+        $claimValue = 'test_value';
+
+        $builder = new Builder();
+        $builder->setSub($claimValue);
+        $token = $builder->build();
+
+        $this->assertSame(
+            $claimValue,
+            $token->claims()->getSub()
+        );
+    }
+
+    public function testSetAud(): void
+    {
+        $claimValue = 'test_value';
+
+        $builder = new Builder();
+        $builder->setAud($claimValue);
+        $token = $builder->build();
+
+        $this->assertSame(
+            $claimValue,
+            $token->claims()->getAud()
+        );
+    }
+
+    public function testSetExp(): void
+    {
+        $claimValue = 10000;
+
+        $builder = new Builder();
+        $builder->setExp($claimValue);
+        $token = $builder->build();
+
+        $this->assertSame(
+            $claimValue,
+            $token->claims()->getExp()
+        );
+    }
+
+    public function testSetNbf(): void
+    {
+        $claimValue = 10000;
+
+        $builder = new Builder();
+        $builder->setNbf($claimValue);
+        $token = $builder->build();
+
+        $this->assertSame(
+            $claimValue,
+            $token->claims()->getNbf()
+        );
+    }
+
+    public function testSetIat(): void
+    {
+        $claimValue = 10000;
+
+        $builder = new Builder();
+        $builder->setIat($claimValue);
+        $token = $builder->build();
+
+        $this->assertSame(
+            $claimValue,
+            $token->claims()->getIat()
+        );
+    }
+
+    public function testSetJti(): void
+    {
+        $claimValue = 'test';
+
+        $builder = new Builder();
+        $builder->setJti($claimValue);
+        $token = $builder->build();
+
+        $this->assertSame(
+            $claimValue,
+            $token->claims()->getJti()
+        );
+    }
+
     public function testSetSignature(): void
     {
         $signature = 'test';
