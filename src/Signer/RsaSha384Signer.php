@@ -14,7 +14,7 @@ class RsaSha384Signer extends Rsa
      */
     protected function getAlgHeader(): string
     {
-        return 'RS384';
+        return Algorithm::RSA_SHA_384;
     }
 
     /**
