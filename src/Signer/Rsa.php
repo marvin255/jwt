@@ -18,11 +18,11 @@ use OpenSSLAsymmetricKey;
  */
 abstract class Rsa implements JwtSigner
 {
-    private Secret $public;
+    private ?Secret $public;
 
-    private Secret $private;
+    private ?Secret $private;
 
-    public function __construct(Secret $public, Secret $private)
+    public function __construct(?Secret $public = null, ?Secret $private = null)
     {
         $this->public = $public;
         $this->private = $private;
@@ -61,6 +61,11 @@ abstract class Rsa implements JwtSigner
      */
     public function createSignature(array $joseParams, array $claims): string
     {
+        if ($this->private === null) {
+            $message = 'Private key is needed to create new signature.';
+            throw new SecretKeyIsInvalid($message);
+        }
+
         $data = Base64::arrayEncode($joseParams) . '.' . Base64::arrayEncode($claims);
         $privateKey = $this->openPrivateKey($this->private);
 
@@ -78,6 +83,11 @@ abstract class Rsa implements JwtSigner
      */
     public function verifyToken(Jwt $token): bool
     {
+        if ($this->public === null) {
+            $message = 'Public key is needed to create new signature.';
+            throw new SecretKeyIsInvalid($message);
+        }
+
         $joseParams = $token->jose()->toArray();
         $claims = $token->claims()->toArray();
         $data = Base64::arrayEncode($joseParams) . '.' . Base64::arrayEncode($claims);
