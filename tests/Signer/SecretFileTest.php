@@ -24,6 +24,16 @@ class SecretFileTest extends BaseCase
         $this->assertSame(file_get_contents($filePath), $secretString);
     }
 
+    public function testGetSecretWithFileInTheBeggining(): void
+    {
+        $filePath = 'file://' . __DIR__ . '/_fixtures/SecretFileTest.key';
+
+        $secret = new SecretFile($filePath);
+        $secretString = $secret->getSecret();
+
+        $this->assertSame(file_get_contents($filePath), $secretString);
+    }
+
     public function testGetSecretFromSpl(): void
     {
         $filePath = __DIR__ . '/_fixtures/SecretFileTest.key';
