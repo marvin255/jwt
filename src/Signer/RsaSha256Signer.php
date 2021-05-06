@@ -14,7 +14,7 @@ class RsaSha256Signer extends Rsa
      */
     protected function getAlgHeader(): string
     {
-        return 'RS256';
+        return Algorithm::RSA_SHA_256;
     }
 
     /**

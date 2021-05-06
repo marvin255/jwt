@@ -14,7 +14,7 @@ class HmacSha384Signer extends Hmac
      */
     protected function getAlgHeader(): string
     {
-        return 'HS384';
+        return Algorithm::HMAC_SHA_384;
     }
 
     /**

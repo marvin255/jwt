@@ -14,7 +14,7 @@ class RsaSha512Signer extends Rsa
      */
     protected function getAlgHeader(): string
     {
-        return 'RS512';
+        return Algorithm::RSA_SHA_512;
     }
 
     /**
