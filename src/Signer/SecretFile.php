@@ -21,7 +21,8 @@ class SecretFile implements Secret
     public function __construct(SplFileInfo | string $file, ?string $passPhrase = null)
     {
         if (\is_string($file)) {
-            $file = new SplFileInfo($file);
+            $filePath = str_starts_with($file, 'file://') ? mb_substr($file, 7) : $file;
+            $file = new SplFileInfo($filePath);
         }
 
         if (!$file->isFile() || !$file->isReadable()) {
