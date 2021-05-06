@@ -6,7 +6,7 @@ namespace Marvin255\Jwt\Test\Signer;
 
 use Marvin255\Jwt\Exception\SecretKeyIsInvalid;
 use Marvin255\Jwt\Signer\RsaSha512Signer;
-use Marvin255\Jwt\Signer\SecretFile;
+use Marvin255\Jwt\Signer\Secret;
 use Marvin255\Jwt\Test\BaseCase;
 use Marvin255\Jwt\Token\JoseHeader;
 
@@ -20,8 +20,8 @@ class RsaSha512SignerTest extends BaseCase
         $jose = ['test' => 'test value'];
         $awaitedJose = ['test' => 'test value', JoseHeader::ALG => 'RS512'];
 
-        $public = new SecretFile(__DIR__ . '/_fixtures/RsaSha512SignerTest_public.key');
-        $private = new SecretFile(__DIR__ . '/_fixtures/RsaSha512SignerTest_private.key');
+        $public = $this->getPublicKey();
+        $private = $this->getPrivateKey();
 
         $signer = new RsaSha512Signer($public, $private);
         $updatedJose = $signer->updateJoseParams($jose);
@@ -35,8 +35,8 @@ class RsaSha512SignerTest extends BaseCase
         $claims = ['test_claim' => 'test claim value'];
         $awaitedSignature = file_get_contents(__DIR__ . '/_fixtures/RsaSha512SignerTest_signature.txt');
 
-        $public = new SecretFile(__DIR__ . '/_fixtures/RsaSha512SignerTest_public.key');
-        $private = new SecretFile(__DIR__ . '/_fixtures/RsaSha512SignerTest_private.key');
+        $public = $this->getPublicKey();
+        $private = $this->getPrivateKey();
 
         $signer = new RsaSha512Signer($public, $private);
         $signature = $signer->createSignature($jose, $claims);
@@ -50,8 +50,8 @@ class RsaSha512SignerTest extends BaseCase
         $claims = ['test_claim' => 'test claim value'];
         $awaitedSignature = file_get_contents(__DIR__ . '/_fixtures/RsaSha512SignerTest_signature.txt');
 
-        $public = new SecretFile(__DIR__ . '/_fixtures/RsaSha512SignerTest_public.key');
-        $private = new SecretFile(__DIR__ . '/_fixtures/RsaSha512SignerTest_private.key');
+        $public = $this->getPublicKey();
+        $private = $this->getPrivateKey();
 
         $signer = new RsaSha512Signer($private, $public);
 
@@ -66,8 +66,8 @@ class RsaSha512SignerTest extends BaseCase
         $signature = file_get_contents(__DIR__ . '/_fixtures/RsaSha512SignerTest_signature.txt');
         $token = $this->getTokenMock($jose, $claims, $signature);
 
-        $public = new SecretFile(__DIR__ . '/_fixtures/RsaSha512SignerTest_public.key');
-        $private = new SecretFile(__DIR__ . '/_fixtures/RsaSha512SignerTest_private.key');
+        $public = $this->getPublicKey();
+        $private = $this->getPrivateKey();
 
         $signer = new RsaSha512Signer($public, $private);
         $isVerified = $signer->verifyToken($token);
@@ -82,8 +82,8 @@ class RsaSha512SignerTest extends BaseCase
         $signature = '123';
         $token = $this->getTokenMock($jose, $claims, $signature);
 
-        $public = new SecretFile(__DIR__ . '/_fixtures/RsaSha512SignerTest_public.key');
-        $private = new SecretFile(__DIR__ . '/_fixtures/RsaSha512SignerTest_private.key');
+        $public = $this->getPublicKey();
+        $private = $this->getPrivateKey();
 
         $signer = new RsaSha512Signer($public, $private);
         $isVerified = $signer->verifyToken($token);
@@ -98,12 +98,32 @@ class RsaSha512SignerTest extends BaseCase
         $signature = '123';
         $token = $this->getTokenMock($jose, $claims, $signature);
 
-        $public = new SecretFile(__DIR__ . '/_fixtures/RsaSha512SignerTest_public.key');
-        $private = new SecretFile(__DIR__ . '/_fixtures/RsaSha512SignerTest_private.key');
+        $public = $this->getPublicKey();
+        $private = $this->getPrivateKey();
 
         $signer = new RsaSha512Signer($private, $public);
 
         $this->expectException(SecretKeyIsInvalid::class);
         $signer->verifyToken($token);
+    }
+
+    private function getPublicKey(): Secret
+    {
+        $public = $this->getMockBuilder(Secret::class)->getMock();
+        $public->method('getSecret')->willReturn(
+            file_get_contents(__DIR__ . '/_fixtures/RsaSha512SignerTest_public.key')
+        );
+
+        return $public;
+    }
+
+    private function getPrivateKey(): Secret
+    {
+        $private = $this->getMockBuilder(Secret::class)->getMock();
+        $private->method('getSecret')->willReturn(
+            file_get_contents(__DIR__ . '/_fixtures/RsaSha512SignerTest_private.key')
+        );
+
+        return $private;
     }
 }
