@@ -30,16 +30,15 @@ $token = JwtFactory::decoder()->decodeHeader($_SERVER['HTTP_AUTHORIZE']);
 
 ```php
 use Marvin255\Jwt\JwtFactory;
-use Marvin255\Jwt\Signer\SecretFile;
+use Marvin255\Jwt\Signer\SecretBase;
 use Marvin255\Jwt\Signer\RsaSha512Signer;
 use Marvin255\Jwt\Validator\ExpirationConstraint;
 use Marvin255\Jwt\Validator\NotBeforeConstraint;
 use Marvin255\Jwt\Validator\AudienceConstraint;
 use Marvin255\Jwt\Validator\SignatureConstraint;
 
-$publicKey = new SecretFile('path/to/public.key');
-$privateKey = new SecretFile('path/to/private.key');
-$signer = new RsaSha512Signer($publicKey, $privateKey);
+$publicKey = new SecretBase('file:///path/to/public.key');
+$signer = new RsaSha512Signer($publicKey);
 
 $constraints = [
     new ExpirationConstraint(3),          // checks that token is not expired with 3s leeway
@@ -62,8 +61,8 @@ if ($res->isValid()) {
 
 ```php
 // jose params
-$alg = $token->jose()->getAlg();                   // registered JOSE params have own getters
-$customParam = $token->jose()->get('custom_jose'); // any custom JOSE param from the payload
+$alg = $token->jose()->getAlg();                      // registered JOSE params have own getters
+$customParam = $token->jose()->get('custom_jose');    // any custom JOSE param from the payload
 
 // claims
 $iss = $token->claims()->getIss();                    // registered claims have own getters
@@ -76,19 +75,18 @@ $customClaim = $token->claims()->get('custom_claim'); // any custom claim from t
 
 ```php
 use Marvin255\Jwt\JwtFactory;
-use Marvin255\Jwt\Signer\SecretFile;
+use Marvin255\Jwt\Signer\SecretBase;
 use Marvin255\Jwt\Signer\RsaSha512Signer;
 
-$publicKey = new SecretFile('path/to/public.key');
-$privateKey = new SecretFile('path/to/private.key');
-$signer = new RsaSha512Signer($publicKey, $privateKey);
+$privateKey = new SecretBase('file:///path/to/private.key');
+$signer = new RsaSha512Signer(null, $privateKey);
 
 $token = JwtFactory::builder()
     ->setJoseParam('test', 'test') // any custom JOSE param
     ->setIss('test')               // registered claims have own setters
     ->setClaim('test', 'test')     // any custom claim
     ->signWith($signer)            // signer
-    ->create()
+    ->build()
 ;
 ```
 
