@@ -27,12 +27,12 @@ class Algorithm
         self::RSA_SHA_512,
     ];
 
-    public const ALL = [
-        self::HMAC_SHA_256,
-        self::HMAC_SHA_384,
-        self::HMAC_SHA_512,
-        self::RSA_SHA_256,
-        self::RSA_SHA_384,
-        self::RSA_SHA_512,
+    public const IMPLEMENTATIONS = [
+        self::HMAC_SHA_256 => HmacSha256Signer::class,
+        self::HMAC_SHA_384 => HmacSha384Signer::class,
+        self::HMAC_SHA_512 => HmacSha512Signer::class,
+        self::RSA_SHA_256 => RsaSha256Signer::class,
+        self::RSA_SHA_384 => RsaSha384Signer::class,
+        self::RSA_SHA_512 => RsaSha512Signer::class,
     ];
 }
