@@ -12,6 +12,8 @@ interface JwtSigner
     /**
      * Updates list of JOSE headers for token.
      *
+     * @param array<string, mixed> $params
+     *
      * @return array<string, mixed>
      */
     public function updateJoseParams(array $params): array;
@@ -19,8 +21,8 @@ interface JwtSigner
     /**
      * Creates signature for set params.
      *
-     * @param array $joseParams
-     * @param array $claims
+     * @param array<string, mixed> $joseParams
+     * @param array<string, mixed> $claims
      *
      * @return string
      */

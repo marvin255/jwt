@@ -17,8 +17,8 @@ class ValidationResult
     private array $errors;
 
     /**
-     * @param bool  $isValid
-     * @param array $errors
+     * @param bool     $isValid
+     * @param string[] $errors
      */
     public function __construct(bool $isValid, array $errors = [])
     {

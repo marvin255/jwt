@@ -30,14 +30,20 @@ class Decoder implements JwtDecoder
     {
         $tokenParts = $this->explodeToken($tokenString);
         $decodedTokenParts = $this->decodeTokenParts($tokenParts);
-        [$joseParams, $claims, $signature] = $decodedTokenParts;
 
-        return $this->builder
-            ->setJoseParams($joseParams)
-            ->setClaims($claims)
-            ->setSignature($signature)
-            ->build()
-        ;
+        if (!empty($decodedTokenParts[0]) && \is_array($decodedTokenParts[0])) {
+            $this->builder->setJoseParams($decodedTokenParts[0]);
+        }
+
+        if (!empty($decodedTokenParts[1]) && \is_array($decodedTokenParts[1])) {
+            $this->builder->setClaims($decodedTokenParts[1]);
+        }
+
+        if (!empty($decodedTokenParts[2]) && \is_string($decodedTokenParts[2])) {
+            $this->builder->setSignature($decodedTokenParts[2]);
+        }
+
+        return $this->builder->build();
     }
 
     /**

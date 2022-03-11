@@ -20,5 +20,5 @@ interface JwtValidator
      *
      * @return ValidationResult
      */
-    public function validate(Jwt $token, Constraint | array | null $constraints = null): ValidationResult;
+    public function validate(Jwt $token, Constraint|array|null $constraints = null): ValidationResult;
 }
