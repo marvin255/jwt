@@ -32,7 +32,7 @@ class Validator implements JwtValidator
     /**
      * {@inheritDoc}
      */
-    public function validate(Jwt $token, Constraint | array | null $constraints = null): ValidationResult
+    public function validate(Jwt $token, Constraint|array|null $constraints = null): ValidationResult
     {
         $constraintsForValidation = $this->defineConstraintsList($constraints);
 
@@ -56,7 +56,7 @@ class Validator implements JwtValidator
      *
      * @return Constraint[]
      */
-    private function defineConstraintsList(Constraint | array | null $constraints): array
+    private function defineConstraintsList(Constraint|array|null $constraints): array
     {
         if ($constraints === null) {
             return $this->defaultConstraints;

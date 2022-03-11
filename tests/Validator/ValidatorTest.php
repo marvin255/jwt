@@ -9,6 +9,7 @@ use Marvin255\Jwt\Jwt;
 use Marvin255\Jwt\Test\BaseCase;
 use Marvin255\Jwt\Validator\Constraint;
 use Marvin255\Jwt\Validator\Validator;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
@@ -67,8 +68,14 @@ class ValidatorTest extends BaseCase
         $this->assertSame(['error'], $response->getErrors());
     }
 
+    /**
+     * @param Jwt $token
+     *
+     * @return Constraint[]
+     */
     private function createValidConstraintsForToken(Jwt $token): array
     {
+        /** @var Constraint&MockObject */
         $constraint = $this->getMockBuilder(Constraint::class)->getMock();
         $constraint->expects($this->once())
             ->method('checkToken')
@@ -78,6 +85,7 @@ class ValidatorTest extends BaseCase
             ->willReturn(true);
         $constraint->expects($this->never())->method('createErrorMessage');
 
+        /** @var Constraint&MockObject */
         $constraint1 = $this->getMockBuilder(Constraint::class)->getMock();
         $constraint1->expects($this->once())
             ->method('checkToken')
@@ -90,8 +98,14 @@ class ValidatorTest extends BaseCase
         return [$constraint, $constraint1];
     }
 
+    /**
+     * @param Jwt $token
+     *
+     * @return Constraint[]
+     */
     private function createInvalidConstraintsForToken(Jwt $token): array
     {
+        /** @var Constraint&MockObject */
         $constraint = $this->getMockBuilder(Constraint::class)->getMock();
         $constraint->expects($this->once())
             ->method('checkToken')
@@ -101,6 +115,7 @@ class ValidatorTest extends BaseCase
             ->willReturn(true);
         $constraint->expects($this->never())->method('createErrorMessage');
 
+        /** @var Constraint&MockObject */
         $constraint1 = $this->getMockBuilder(Constraint::class)->getMock();
         $constraint1->expects($this->once())
             ->method('checkToken')

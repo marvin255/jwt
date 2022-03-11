@@ -24,7 +24,7 @@ interface JwtBuilder
     /**
      * Sets array of JOSE header params.
      *
-     * @param array $params
+     * @param mixed[] $params
      *
      * @return JwtBuilder
      */
@@ -43,7 +43,7 @@ interface JwtBuilder
     /**
      * Sets array of claims.
      *
-     * @param array $claims
+     * @param mixed[] $claims
      *
      * @return JwtBuilder
      */

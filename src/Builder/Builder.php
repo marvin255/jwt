@@ -17,8 +17,14 @@ use Marvin255\Jwt\Token\Token;
  */
 class Builder implements JwtBuilder
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $jose = [];
 
+    /**
+     * @var array<string, mixed>
+     */
     private array $claims = [];
 
     private string $signature = '';
