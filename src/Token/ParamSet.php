@@ -16,7 +16,7 @@ abstract class ParamSet
     /**
      * @var array<string, mixed>
      */
-    private array $params;
+    private readonly array $params;
 
     /**
      * @param iterable $params
@@ -25,10 +25,11 @@ abstract class ParamSet
      */
     public function __construct(iterable $params = [])
     {
-        $this->params = [];
+        $setParams = [];
         foreach ($params as $paramName => $paramValue) {
-            $this->params[(string) $paramName] = $paramValue;
+            $setParams[(string) $paramName] = $paramValue;
         }
+        $this->params = $setParams;
     }
 
     /**
