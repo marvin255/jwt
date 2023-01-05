@@ -7,7 +7,7 @@ namespace Marvin255\Jwt\Token;
 /**
  * Object that represents JOSE header for token.
  */
-class JoseHeader extends ParamSet
+final class JoseHeader extends ParamSet
 {
     public const TYP = 'typ';
     public const CTY = 'cty';

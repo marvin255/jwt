@@ -9,14 +9,13 @@ use Marvin255\Jwt\Helper\Base64;
 use Marvin255\Jwt\Jwt;
 use Marvin255\Jwt\JwtBuilder;
 use Marvin255\Jwt\JwtDecoder;
-use Throwable;
 
 /**
  * Basic decoder that converts string to token object.
  */
-class Decoder implements JwtDecoder
+final class Decoder implements JwtDecoder
 {
-    private JwtBuilder $builder;
+    private readonly JwtBuilder $builder;
 
     public function __construct(JwtBuilder $builder)
     {
@@ -52,8 +51,7 @@ class Decoder implements JwtDecoder
     public function decodeHeader(string $httpHeader): Jwt
     {
         if (!preg_match('/^(?:\s+)?Bearer\s(.+)$/', $httpHeader, $matches)) {
-            $message = sprintf("Can't recognize jwt header in string: %s.", $httpHeader);
-            throw new JwtException($message);
+            throw new JwtException(sprintf("Can't recognize jwt header in string: %s", $httpHeader));
         }
 
         return $this->decodeString($matches[1]);
@@ -71,8 +69,7 @@ class Decoder implements JwtDecoder
         $tokenParts = explode('.', $token);
 
         if (\count($tokenParts) !== 3) {
-            $message = 'Token string must contains 3 parts.';
-            throw new JwtException($message);
+            throw new JwtException('Token string must contains 3 parts');
         }
 
         return $tokenParts;
@@ -107,9 +104,8 @@ class Decoder implements JwtDecoder
     {
         try {
             $decoded = Base64::arrayDecode($part);
-        } catch (Throwable $e) {
-            $message = sprintf("Can't decode token object: %s.", $e->getMessage());
-            throw new JwtException($message);
+        } catch (\Throwable $e) {
+            throw new JwtException(sprintf("Can't decode token object: %s", $e->getMessage()));
         }
 
         return $decoded;

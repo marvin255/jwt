@@ -7,7 +7,7 @@ namespace Marvin255\Jwt\Signer;
 /**
  * Hmac sha 512 signer.
  */
-class HmacSha512Signer extends Hmac
+final class HmacSha512Signer extends Hmac
 {
     /**
      * {@inheritDoc}

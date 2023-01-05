@@ -11,7 +11,7 @@ use Marvin255\Jwt\Token\JoseHeader;
 /**
  * Signer for non signed tokens.
  */
-class NoneSigner implements JwtSigner
+final class NoneSigner implements JwtSigner
 {
     /**
      * {@inheritDoc}

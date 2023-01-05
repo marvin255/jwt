@@ -11,7 +11,7 @@ use Marvin255\Jwt\JwtEncoder;
 /**
  * Basic encoder that converts token object to string.
  */
-class Encoder implements JwtEncoder
+final class Encoder implements JwtEncoder
 {
     /**
      * {@inheritDoc}

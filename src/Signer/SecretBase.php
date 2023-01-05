@@ -9,11 +9,11 @@ use Marvin255\Jwt\Exception\SecretFileNotFoundException;
 /**
  * Object that stores secret keys for signer.
  */
-class SecretBase implements Secret
+final class SecretBase implements Secret
 {
-    private string $secret;
+    private readonly string $secret;
 
-    private ?string $passPhrase;
+    private readonly ?string $passPhrase;
 
     public function __construct(string $secret, ?string $passPhrase = null)
     {
@@ -33,8 +33,7 @@ class SecretBase implements Secret
         if (str_starts_with($this->secret, 'file://')) {
             $filePath = mb_substr($this->secret, 7);
             if (!file_exists($filePath) || !is_readable($filePath)) {
-                $message = sprintf('Secret file %s not found or unreadable.', $filePath);
-                throw new SecretFileNotFoundException($message);
+                throw new SecretFileNotFoundException(sprintf('Secret file %s not found or unreadable', $filePath));
             }
             $secret = (string) file_get_contents($filePath);
         }

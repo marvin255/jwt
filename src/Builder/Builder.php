@@ -15,7 +15,7 @@ use Marvin255\Jwt\Token\Token;
 /**
  * Builder object for jwt.
  */
-class Builder implements JwtBuilder
+final class Builder implements JwtBuilder
 {
     /**
      * @var array<string, mixed>

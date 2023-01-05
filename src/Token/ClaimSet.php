@@ -7,7 +7,7 @@ namespace Marvin255\Jwt\Token;
 /**
  * Object that represents claim set for token.
  */
-class ClaimSet extends ParamSet
+final class ClaimSet extends ParamSet
 {
     public const ISS = 'iss';
     public const SUB = 'sub';

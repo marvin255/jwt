@@ -6,9 +6,15 @@ namespace Marvin255\Jwt\Helper;
 
 /**
  * Helper with base64 encode and decode methods.
+ *
+ * @internal
  */
-class Base64
+final class Base64
 {
+    private function __construct()
+    {
+    }
+
     /**
      * Encodes string as base64 url.
      *

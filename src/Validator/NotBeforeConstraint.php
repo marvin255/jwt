@@ -9,9 +9,9 @@ use Marvin255\Jwt\Jwt;
 /**
  * Constraint that checks that token can be used now.
  */
-class NotBeforeConstraint implements Constraint
+final class NotBeforeConstraint implements Constraint
 {
-    private int $leeway;
+    private readonly int $leeway;
 
     public function __construct(int $leeway = 0)
     {

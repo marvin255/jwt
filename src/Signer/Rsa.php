@@ -9,7 +9,6 @@ use Marvin255\Jwt\Helper\Base64;
 use Marvin255\Jwt\Jwt;
 use Marvin255\Jwt\JwtSigner;
 use Marvin255\Jwt\Token\JoseHeader;
-use OpenSSLAsymmetricKey;
 
 /**
  * Abstract class for signers based on rsa.
@@ -18,9 +17,9 @@ use OpenSSLAsymmetricKey;
  */
 abstract class Rsa implements JwtSigner
 {
-    private ?Secret $public;
+    private readonly ?Secret $public;
 
-    private ?Secret $private;
+    private readonly ?Secret $private;
 
     public function __construct(?Secret $public = null, ?Secret $private = null)
     {
@@ -62,8 +61,7 @@ abstract class Rsa implements JwtSigner
     public function createSignature(array $joseParams, array $claims): string
     {
         if ($this->private === null) {
-            $message = 'Private key is needed to create new signature.';
-            throw new SecretKeyIsInvalid($message);
+            throw new SecretKeyIsInvalid('Private key is needed to create new signature');
         }
 
         $data = Base64::arrayEncode($joseParams) . '.' . Base64::arrayEncode($claims);
@@ -84,8 +82,7 @@ abstract class Rsa implements JwtSigner
     public function verifyToken(Jwt $token): bool
     {
         if ($this->public === null) {
-            $message = 'Public key is needed to create new signature.';
-            throw new SecretKeyIsInvalid($message);
+            throw new SecretKeyIsInvalid('Public key is needed to create new signature');
         }
 
         $joseParams = $token->jose()->toArray();
@@ -104,21 +101,20 @@ abstract class Rsa implements JwtSigner
      *
      * @param Secret $key
      *
-     * @return OpenSSLAsymmetricKey
+     * @return \OpenSSLAsymmetricKey
      *
      * @psalm-suppress RedundantCondition
      * @psalm-suppress PossiblyNullArgument
      */
-    private function openPrivateKey(Secret $secret): OpenSSLAsymmetricKey
+    private function openPrivateKey(Secret $secret): \OpenSSLAsymmetricKey
     {
         $key = openssl_pkey_get_private(
             $secret->getSecret(),
             $secret->getPassPhrase()
         );
 
-        if (!($key instanceof OpenSSLAsymmetricKey)) {
-            $message = 'Private key for RSA is invalid or malformed. Correct PEM key is required.';
-            throw new SecretKeyIsInvalid($message);
+        if (!($key instanceof \OpenSSLAsymmetricKey)) {
+            throw new SecretKeyIsInvalid('Private key for RSA is invalid or malformed. Correct PEM key is required');
         }
 
         return $key;
@@ -129,18 +125,17 @@ abstract class Rsa implements JwtSigner
      *
      * @param Secret $key
      *
-     * @return OpenSSLAsymmetricKey
+     * @return \OpenSSLAsymmetricKey
      *
      * @psalm-suppress RedundantCondition
      * @psalm-suppress PossiblyNullArgument
      */
-    private function openPublicKey(Secret $secret): OpenSSLAsymmetricKey
+    private function openPublicKey(Secret $secret): \OpenSSLAsymmetricKey
     {
         $key = openssl_pkey_get_public($secret->getSecret());
 
-        if (!($key instanceof OpenSSLAsymmetricKey)) {
-            $message = 'Public key for RSA is invalid or malformed. Correct PEM key is required.';
-            throw new SecretKeyIsInvalid($message);
+        if (!($key instanceof \OpenSSLAsymmetricKey)) {
+            throw new SecretKeyIsInvalid('Public key for RSA is invalid or malformed. Correct PEM key is required');
         }
 
         return $key;

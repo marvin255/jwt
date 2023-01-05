@@ -9,9 +9,9 @@ use Marvin255\Jwt\Jwt;
 /**
  * Constraint that checks that token can be used by this client.
  */
-class AudienceConstraint implements Constraint
+final class AudienceConstraint implements Constraint
 {
-    private string $awaitedAudience;
+    private readonly string $awaitedAudience;
 
     public function __construct(string $awaitedAudience)
     {

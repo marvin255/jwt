@@ -7,7 +7,7 @@ namespace Marvin255\Jwt\Signer;
 /**
  * RSA sha 256 signer.
  */
-class RsaSha256Signer extends Rsa
+final class RsaSha256Signer extends Rsa
 {
     /**
      * {@inheritDoc}

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Marvin255\Jwt;
 
-use Marvin255\Jwt\Token\Token;
-
 /**
  * Interface for builder object that can create new jwt.
  */

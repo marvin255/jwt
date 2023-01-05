@@ -8,6 +8,8 @@ use Marvin255\Jwt\Exception\JwtException;
 
 /**
  * Simple key/value storage for a list of params.
+ *
+ * @internal
  */
 abstract class ParamSet
 {

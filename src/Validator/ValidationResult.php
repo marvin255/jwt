@@ -7,14 +7,14 @@ namespace Marvin255\Jwt\Validator;
 /**
  * Object with response from validator.
  */
-class ValidationResult
+final class ValidationResult
 {
-    private bool $isValid;
+    private readonly bool $isValid;
 
     /**
      * @var string[]
      */
-    private array $errors;
+    private readonly array $errors;
 
     /**
      * @param bool     $isValid

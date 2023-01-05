@@ -7,7 +7,7 @@ namespace Marvin255\Jwt\Signer;
 /**
  * Enum for algorithms names.
  */
-class Algorithm
+final class Algorithm
 {
     public const HMAC_SHA_256 = 'HS256';
     public const HMAC_SHA_384 = 'HS384';
