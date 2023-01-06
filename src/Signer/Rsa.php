@@ -28,35 +28,22 @@ abstract class Rsa implements JwtSigner
     }
 
     /**
-     * Returns name of algorithm for JOSE header.
-     *
-     * @return string
+     * Returns algorithm enum for JOSE header.
      */
-    abstract protected function getAlgHeader(): string;
-
-    /**
-     * Returns name of algorithm for JOSE header.
-     *
-     * @return int
-     */
-    abstract protected function getPHPAlgName(): int;
+    abstract protected function getAlgorithm(): Algorithm;
 
     /**
      * {@inheritDoc}
      */
     public function updateJoseParams(array $params): array
     {
-        $params[JoseHeaderParams::ALG->value] = $this->getAlgHeader();
+        $params[JoseHeaderParams::ALG->value] = $this->getAlgorithm()->value;
 
         return $params;
     }
 
     /**
      * {@inheritDoc}
-     *
-     * @throws SecretKeyIsInvalid
-     *
-     * @psalm-suppress InvalidArgument
      */
     public function createSignature(array $joseParams, array $claims): string
     {
@@ -67,17 +54,18 @@ abstract class Rsa implements JwtSigner
         $data = Base64::arrayEncode($joseParams) . '.' . Base64::arrayEncode($claims);
         $privateKey = $this->openPrivateKey($this->private);
 
-        openssl_sign($data, $signature, $privateKey, $this->getPHPAlgName());
+        openssl_sign(
+            $data,
+            $signature,
+            $privateKey,
+            $this->getAlgorithm()->getPhpAlgName()
+        );
 
         return $signature;
     }
 
     /**
      * {@inheritDoc}
-     *
-     * @throws SecretKeyIsInvalid
-     *
-     * @psalm-suppress InvalidArgument
      */
     public function verifyToken(Jwt $token): bool
     {
@@ -91,20 +79,18 @@ abstract class Rsa implements JwtSigner
         $signature = $token->signature()->getSignatureString();
         $publicKey = $this->openPublicKey($this->public);
 
-        $res = openssl_verify($data, $signature, $publicKey, $this->getPHPAlgName());
+        $res = openssl_verify(
+            $data,
+            $signature,
+            $publicKey,
+            $this->getAlgorithm()->getPhpAlgName()
+        );
 
         return $res === 1;
     }
 
     /**
      * Opens private key for open_ssl lib.
-     *
-     * @param Secret $key
-     *
-     * @return \OpenSSLAsymmetricKey
-     *
-     * @psalm-suppress RedundantCondition
-     * @psalm-suppress PossiblyNullArgument
      */
     private function openPrivateKey(Secret $secret): \OpenSSLAsymmetricKey
     {
@@ -122,13 +108,6 @@ abstract class Rsa implements JwtSigner
 
     /**
      * Opens public key for open_ssl lib.
-     *
-     * @param Secret $key
-     *
-     * @return \OpenSSLAsymmetricKey
-     *
-     * @psalm-suppress RedundantCondition
-     * @psalm-suppress PossiblyNullArgument
      */
     private function openPublicKey(Secret $secret): \OpenSSLAsymmetricKey
     {

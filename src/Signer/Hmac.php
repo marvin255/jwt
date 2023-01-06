@@ -24,25 +24,16 @@ abstract class Hmac implements JwtSigner
     }
 
     /**
-     * Returns name of algorithm for JOSE header.
-     *
-     * @return string
+     * Returns algorithm enum for JOSE header.
      */
-    abstract protected function getAlgHeader(): string;
-
-    /**
-     * Returns name of algorithm for JOSE header.
-     *
-     * @return string
-     */
-    abstract protected function getPHPAlgName(): string;
+    abstract protected function getAlgorithm(): Algorithm;
 
     /**
      * {@inheritDoc}
      */
     public function updateJoseParams(array $params): array
     {
-        $params[JoseHeaderParams::ALG->value] = $this->getAlgHeader();
+        $params[JoseHeaderParams::ALG->value] = $this->getAlgorithm()->value;
 
         return $params;
     }
@@ -55,7 +46,7 @@ abstract class Hmac implements JwtSigner
         $data = Base64::arrayEncode($joseParams) . '.' . Base64::arrayEncode($claims);
 
         return hash_hmac(
-            $this->getPHPAlgName(),
+            (string) $this->getAlgorithm()->getPhpAlgName(),
             $data,
             $this->secret->getSecret()
         );

@@ -12,16 +12,8 @@ final class RsaSha384Signer extends Rsa
     /**
      * {@inheritDoc}
      */
-    protected function getAlgHeader(): string
+    protected function getAlgorithm(): Algorithm
     {
         return Algorithm::RSA_SHA_384;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPHPAlgName(): int
-    {
-        return \OPENSSL_ALGO_SHA384;
     }
 }

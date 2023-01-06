@@ -12,16 +12,8 @@ final class HmacSha384Signer extends Hmac
     /**
      * {@inheritDoc}
      */
-    protected function getAlgHeader(): string
+    protected function getAlgorithm(): Algorithm
     {
         return Algorithm::HMAC_SHA_384;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPHPAlgName(): string
-    {
-        return 'sha384';
     }
 }

@@ -18,7 +18,7 @@ final class NoneSigner implements JwtSigner
      */
     public function updateJoseParams(array $params): array
     {
-        $params[JoseHeaderParams::ALG->value] = 'none';
+        $params[JoseHeaderParams::ALG->value] = Algorithm::NONE->value;
 
         return $params;
     }
