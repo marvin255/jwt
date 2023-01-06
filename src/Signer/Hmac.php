@@ -46,7 +46,7 @@ abstract class Hmac implements JwtSigner
         $data = Base64::arrayEncode($joseParams) . '.' . Base64::arrayEncode($claims);
 
         return hash_hmac(
-            (string) $this->getAlgorithm()->getPhpAlgName(),
+            $this->getAlgorithm()->getPhpAlgName(),
             $data,
             $this->secret->getSecret()
         );

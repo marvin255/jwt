@@ -11,6 +11,8 @@ namespace Marvin255\Jwt\Helper;
  */
 final class Base64
 {
+    private const MAX_JSON_DEPTH = 512;
+
     private function __construct()
     {
     }
@@ -31,11 +33,7 @@ final class Base64
      */
     public static function urlDecode(string $data): string
     {
-        $decoded = str_replace(
-            ['-', '_'],
-            ['+', '/'],
-            $data
-        );
+        $decoded = strtr($data, '-_', '+/');
 
         return base64_decode($decoded);
     }
@@ -57,6 +55,9 @@ final class Base64
     {
         $json = self::urlDecode($data);
 
-        return (array) json_decode($json, true, 512, \JSON_THROW_ON_ERROR);
+        /** @var array */
+        $result = json_decode($json, true, self::MAX_JSON_DEPTH, \JSON_THROW_ON_ERROR);
+
+        return $result;
     }
 }

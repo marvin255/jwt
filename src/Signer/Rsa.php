@@ -58,7 +58,7 @@ abstract class Rsa implements JwtSigner
             $data,
             $signature,
             $privateKey,
-            $this->getAlgorithm()->getPhpAlgName()
+            (int) $this->getAlgorithm()->getPhpAlgName()
         );
 
         return $signature;
@@ -83,7 +83,7 @@ abstract class Rsa implements JwtSigner
             $data,
             $signature,
             $publicKey,
-            $this->getAlgorithm()->getPhpAlgName()
+            (int) $this->getAlgorithm()->getPhpAlgName()
         );
 
         return $res === 1;

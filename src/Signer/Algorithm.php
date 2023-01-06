@@ -17,16 +17,16 @@ enum Algorithm: string
     case RSA_SHA_512 = 'RS512';
     case NONE = 'none';
 
-    public function getPhpAlgName(): string|int
+    public function getPhpAlgName(): string
     {
         return match ($this) {
             Algorithm::HMAC_SHA_256 => 'sha256',
             Algorithm::HMAC_SHA_384 => 'sha384',
             Algorithm::HMAC_SHA_512 => 'sha512',
-            Algorithm::RSA_SHA_256 => \OPENSSL_ALGO_SHA256,
-            Algorithm::RSA_SHA_384 => \OPENSSL_ALGO_SHA384,
-            Algorithm::RSA_SHA_512 => \OPENSSL_ALGO_SHA512,
-            Algorithm::NONE => '',
+            Algorithm::RSA_SHA_256 => (string) \OPENSSL_ALGO_SHA256,
+            Algorithm::RSA_SHA_384 => (string) \OPENSSL_ALGO_SHA384,
+            Algorithm::RSA_SHA_512 => (string) \OPENSSL_ALGO_SHA512,
+            default => '',
         };
     }
 }

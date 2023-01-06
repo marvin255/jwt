@@ -42,6 +42,11 @@ class JoseHeaderTest extends BaseCase
                 JoseHeaderParams::TYP->value,
                 $value,
             ],
+            JoseHeaderParams::TYP->value . ' int value' => [
+                [JoseHeaderParams::TYP->value => 123],
+                JoseHeaderParams::TYP->value,
+                '123',
+            ],
             JoseHeaderParams::TYP->value . ' not defined' => [
                 [],
                 JoseHeaderParams::TYP->value,
@@ -141,6 +146,11 @@ class JoseHeaderTest extends BaseCase
                 [JoseHeaderParams::CRIT->value => ['param' => 'value']],
                 JoseHeaderParams::CRIT->value,
                 ['param' => 'value'],
+            ],
+            JoseHeaderParams::CRIT->value . ' not an array value' => [
+                [JoseHeaderParams::CRIT->value => 'test'],
+                JoseHeaderParams::CRIT->value,
+                new NoSuchElementException(),
             ],
             JoseHeaderParams::CRIT->value . ' not defined' => [
                 [],

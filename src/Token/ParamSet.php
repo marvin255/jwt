@@ -89,8 +89,8 @@ abstract class ParamSet
     protected function getOptionalArray(string $name): Optional
     {
         /** @var Optional<array> */
-        $optional = isset($this->params[$name])
-            ? Optional::of((array) $this->params[$name])
+        $optional = isset($this->params[$name]) && \is_array($this->params[$name])
+            ? Optional::of($this->params[$name])
             : Optional::empty();
 
         return $optional;

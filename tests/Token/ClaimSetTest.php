@@ -43,6 +43,11 @@ class ClaimSetTest extends BaseCase
                 ClaimSetParams::ISS->value,
                 $valueString,
             ],
+            ClaimSetParams::ISS->value . ' int value' => [
+                [ClaimSetParams::ISS->value => 123],
+                ClaimSetParams::ISS->value,
+                '123',
+            ],
             ClaimSetParams::ISS->value . ' not defined' => [
                 [],
                 ClaimSetParams::ISS->value,
@@ -72,6 +77,11 @@ class ClaimSetTest extends BaseCase
                 [ClaimSetParams::EXP->value => $valueInt],
                 ClaimSetParams::EXP->value,
                 $valueInt,
+            ],
+            ClaimSetParams::EXP->value . ' string value' => [
+                [ClaimSetParams::EXP->value => '123'],
+                ClaimSetParams::EXP->value,
+                123,
             ],
             ClaimSetParams::EXP->value . ' not defined' => [
                 [],

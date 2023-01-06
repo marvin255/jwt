@@ -11,6 +11,8 @@ use Marvin255\Jwt\Exception\SecretFileNotFoundException;
  */
 final class SecretBase implements Secret
 {
+    private const FILE_PREFIX = 'file://';
+
     private readonly string $secret;
 
     private readonly ?string $passPhrase;
@@ -28,14 +30,18 @@ final class SecretBase implements Secret
      */
     public function getSecret(): string
     {
-        $secret = $this->secret;
+        if (!str_starts_with($this->secret, self::FILE_PREFIX)) {
+            return $this->secret;
+        }
 
-        if (str_starts_with($this->secret, 'file://')) {
-            $filePath = mb_substr($this->secret, 7);
-            if (!file_exists($filePath) || !is_readable($filePath)) {
-                throw new SecretFileNotFoundException(sprintf('Secret file %s not found or unreadable', $filePath));
-            }
-            $secret = (string) file_get_contents($filePath);
+        $filePath = realpath(substr($this->secret, \strlen(self::FILE_PREFIX)));
+        if ($filePath === false) {
+            throw new SecretFileNotFoundException(sprintf('Secret file %s not found or unreadable', $this->secret));
+        }
+
+        $secret = file_get_contents($filePath);
+        if (empty($secret)) {
+            throw new SecretFileNotFoundException(sprintf('Secret file %s is empty', $this->secret));
         }
 
         return $secret;
