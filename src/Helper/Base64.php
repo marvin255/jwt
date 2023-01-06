@@ -17,10 +17,6 @@ final class Base64
 
     /**
      * Encodes string as base64 url.
-     *
-     * @param string $data
-     *
-     * @return string
      */
     public static function urlEncode(string $data): string
     {
@@ -32,10 +28,6 @@ final class Base64
 
     /**
      * Decodes string from base64 url.
-     *
-     * @param string $data
-     *
-     * @return string
      */
     public static function urlDecode(string $data): string
     {
@@ -50,10 +42,6 @@ final class Base64
 
     /**
      * Encodes array to base64 string.
-     *
-     * @param array $data
-     *
-     * @return string
      */
     public static function arrayEncode(array $data): string
     {
@@ -64,10 +52,6 @@ final class Base64
 
     /**
      * Decodes array from base64 string.
-     *
-     * @param string $data
-     *
-     * @return array
      */
     public static function arrayDecode(string $data): array
     {
