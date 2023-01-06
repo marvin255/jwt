@@ -6,7 +6,7 @@ namespace Marvin255\Jwt\Test\Signer;
 
 use Marvin255\Jwt\Signer\NoneSigner;
 use Marvin255\Jwt\Test\BaseCase;
-use Marvin255\Jwt\Token\JoseHeader;
+use Marvin255\Jwt\Token\JoseHeaderParams;
 
 /**
  * @internal
@@ -16,7 +16,7 @@ class NoneSignerTest extends BaseCase
     public function testUpdateJoseParams(): void
     {
         $jose = ['test' => 'test value'];
-        $awaitedJose = ['test' => 'test value', JoseHeader::ALG => 'none'];
+        $awaitedJose = ['test' => 'test value', JoseHeaderParams::ALG->value => 'none'];
 
         $signer = new NoneSigner();
         $updatedJose = $signer->updateJoseParams($jose);

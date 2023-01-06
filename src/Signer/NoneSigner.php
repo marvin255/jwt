@@ -6,7 +6,7 @@ namespace Marvin255\Jwt\Signer;
 
 use Marvin255\Jwt\Jwt;
 use Marvin255\Jwt\JwtSigner;
-use Marvin255\Jwt\Token\JoseHeader;
+use Marvin255\Jwt\Token\JoseHeaderParams;
 
 /**
  * Signer for non signed tokens.
@@ -18,7 +18,7 @@ final class NoneSigner implements JwtSigner
      */
     public function updateJoseParams(array $params): array
     {
-        $params[JoseHeader::ALG] = 'none';
+        $params[JoseHeaderParams::ALG->value] = 'none';
 
         return $params;
     }

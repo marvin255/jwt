@@ -7,7 +7,7 @@ namespace Marvin255\Jwt\Signer;
 use Marvin255\Jwt\Helper\Base64;
 use Marvin255\Jwt\Jwt;
 use Marvin255\Jwt\JwtSigner;
-use Marvin255\Jwt\Token\JoseHeader;
+use Marvin255\Jwt\Token\JoseHeaderParams;
 
 /**
  * Abstract class for signers based on hmac.
@@ -42,7 +42,7 @@ abstract class Hmac implements JwtSigner
      */
     public function updateJoseParams(array $params): array
     {
-        $params[JoseHeader::ALG] = $this->getAlgHeader();
+        $params[JoseHeaderParams::ALG->value] = $this->getAlgHeader();
 
         return $params;
     }

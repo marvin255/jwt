@@ -8,7 +8,8 @@ use Marvin255\Jwt\Exception\SecretKeyIsInvalid;
 use Marvin255\Jwt\Signer\RsaSha512Signer;
 use Marvin255\Jwt\Signer\Secret;
 use Marvin255\Jwt\Test\BaseCase;
-use Marvin255\Jwt\Token\JoseHeader;
+use Marvin255\Jwt\Token\JoseHeaderParams;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
@@ -18,7 +19,7 @@ class RsaSha512SignerTest extends BaseCase
     public function testUpdateJoseParams(): void
     {
         $jose = ['test' => 'test value'];
-        $awaitedJose = ['test' => 'test value', JoseHeader::ALG => 'RS512'];
+        $awaitedJose = ['test' => 'test value', JoseHeaderParams::ALG->value => 'RS512'];
 
         $public = $this->getPublicKey();
         $private = $this->getPrivateKey();
@@ -109,6 +110,7 @@ class RsaSha512SignerTest extends BaseCase
 
     private function getPublicKey(): Secret
     {
+        /** @var MockObject&Secret */
         $public = $this->getMockBuilder(Secret::class)->getMock();
         $public->method('getSecret')->willReturn(
             file_get_contents(__DIR__ . '/_fixtures/RsaSha512SignerTest_public.key')
@@ -119,6 +121,7 @@ class RsaSha512SignerTest extends BaseCase
 
     private function getPrivateKey(): Secret
     {
+        /** @var MockObject&Secret */
         $private = $this->getMockBuilder(Secret::class)->getMock();
         $private->method('getSecret')->willReturn(
             file_get_contents(__DIR__ . '/_fixtures/RsaSha512SignerTest_private.key')
