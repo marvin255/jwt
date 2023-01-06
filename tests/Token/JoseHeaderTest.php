@@ -192,11 +192,19 @@ class JoseHeaderTest extends BaseCase
 
     public function testToArray(): void
     {
-        $set = ['param1' => 'value1', 'param2' => 'value2'];
+        $set = [
+            'param1' => 'value1',
+            'param2' => 'value2',
+            'param3' => null,
+        ];
+        $resultSet = [
+            'param1' => 'value1',
+            'param2' => 'value2',
+        ];
 
         $jose = new JoseHeader($set);
-        $testResult = $jose->toArray();
+        $testSet = $jose->toArray();
 
-        $this->assertSame($set, $testResult);
+        $this->assertSame($resultSet, $testSet);
     }
 }
