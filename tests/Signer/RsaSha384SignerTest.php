@@ -47,17 +47,21 @@ class RsaSha384SignerTest extends BaseCase
 
     public function testCreateSignatureWrongKeyException(): void
     {
-        $jose = ['test_jose' => 'test jose value'];
-        $claims = ['test_claim' => 'test claim value'];
-        $awaitedSignature = file_get_contents(__DIR__ . '/_fixtures/RsaSha384SignerTest_signature.txt');
-
         $public = $this->getPublicKey();
         $private = $this->getPrivateKey();
 
         $signer = new RsaSha384Signer($private, $public);
 
         $this->expectException(SecretKeyIsInvalid::class);
-        $signer->createSignature($jose, $claims);
+        $signer->createSignature([], []);
+    }
+
+    public function testCreateSignatureNoPrivateKeyException(): void
+    {
+        $signer = new RsaSha384Signer();
+
+        $this->expectException(SecretKeyIsInvalid::class);
+        $signer->createSignature([], []);
     }
 
     public function testVerifyToken(): void
@@ -103,6 +107,19 @@ class RsaSha384SignerTest extends BaseCase
         $private = $this->getPrivateKey();
 
         $signer = new RsaSha384Signer($private, $public);
+
+        $this->expectException(SecretKeyIsInvalid::class);
+        $signer->verifyToken($token);
+    }
+
+    public function testVerifyTokenNoKeyException(): void
+    {
+        $jose = ['test_jose' => 'test jose value'];
+        $claims = ['test_claim' => 'test claim value'];
+        $signature = '123';
+        $token = $this->getTokenMock($jose, $claims, $signature);
+
+        $signer = new RsaSha384Signer();
 
         $this->expectException(SecretKeyIsInvalid::class);
         $signer->verifyToken($token);
