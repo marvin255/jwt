@@ -4,86 +4,80 @@ declare(strict_types=1);
 
 namespace Marvin255\Jwt\Token;
 
+use Marvin255\Optional\Optional;
+
 /**
  * Object that represents claim set for token.
  */
 final class ClaimSet extends ParamSet
 {
-    public const ISS = 'iss';
-    public const SUB = 'sub';
-    public const AUD = 'aud';
-    public const EXP = 'exp';
-    public const JTI = 'jti';
-    public const NBF = 'nbf';
-    public const IAT = 'iat';
-
     /**
      * Return iss claim value.
      *
-     * @return string|null
+     * @return Optional<string>
      */
-    public function getIss(): ?string
+    public function iss(): Optional
     {
-        return $this->getOptionalString(self::ISS);
+        return $this->getOptionalString(ClaimSetParams::ISS->value);
     }
 
     /**
      * Return sub claim value.
      *
-     * @return string|null
+     * @return Optional<string>
      */
-    public function getSub(): ?string
+    public function sub(): Optional
     {
-        return $this->getOptionalString(self::SUB);
+        return $this->getOptionalString(ClaimSetParams::SUB->value);
     }
 
     /**
      * Return aud claim value.
      *
-     * @return mixed
+     * @return Optional<mixed>
      */
-    public function getAud(): mixed
+    public function aud(): Optional
     {
-        return $this->get(self::AUD);
+        return $this->param(ClaimSetParams::AUD->value);
     }
 
     /**
      * Return exp claim value.
      *
-     * @return int|null
+     * @return Optional<int>
      */
-    public function getExp(): ?int
+    public function exp(): Optional
     {
-        return $this->getOptionalInt(self::EXP);
+        return $this->getOptionalInt(ClaimSetParams::EXP->value);
     }
 
     /**
      * Return nbf claim value.
      *
-     * @return int|null
+     * @return Optional<int>
      */
-    public function getNbf(): ?int
+    public function nbf(): Optional
     {
-        return $this->getOptionalInt(self::NBF);
+        return $this->getOptionalInt(ClaimSetParams::NBF->value);
     }
 
     /**
      * Return iat claim value.
      *
-     * @return int|null
+     * @return Optional<int>
      */
-    public function getIat(): ?int
+    public function iat(): Optional
     {
-        return $this->getOptionalInt(self::IAT);
+        return $this->getOptionalInt(ClaimSetParams::IAT->value);
     }
 
     /**
      * Return jti claim value.
      *
-     * @return string|null
+     * @return Optional<string>
      */
-    public function getJti(): ?string
+    public function jti(): Optional
     {
-        return $this->getOptionalString(self::JTI);
+        return $this->getOptionalString(ClaimSetParams::JTI->value);
     }
 }

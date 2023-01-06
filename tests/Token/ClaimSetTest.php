@@ -6,234 +6,158 @@ namespace Marvin255\Jwt\Test\Token;
 
 use Marvin255\Jwt\Test\BaseCase;
 use Marvin255\Jwt\Token\ClaimSet;
+use Marvin255\Jwt\Token\ClaimSetParams;
+use Marvin255\Optional\NoSuchElementException;
 
 /**
  * @internal
  */
 class ClaimSetTest extends BaseCase
 {
-    public function testHas(): void
+    /**
+     * @dataProvider provideClaimSetGetter
+     *
+     * @psalm-suppress MixedMethodCall
+     */
+    public function testClaimSetGetter(array $set, string $getter, mixed $result): void
     {
-        $claim = 'claim';
-        $claimValue = 'claim_value';
-        $paramSet = [$claim => $claimValue];
+        $claimSet = new ClaimSet($set);
 
-        $claimSet = new ClaimSet($paramSet);
+        if ($result instanceof \Exception) {
+            $this->expectException(\get_class($result));
+        }
 
-        $this->assertTrue($claimSet->has($claim));
+        $testResult = $claimSet->$getter()->get();
+
+        $this->assertSame($result, $testResult);
     }
 
-    public function testHasNull(): void
+    public function provideClaimSetGetter(): array
     {
-        $claim = 'claim';
-        $claimValue = null;
-        $paramSet = [$claim => $claimValue];
+        $valueString = 'test';
+        $valueInt = 123;
 
-        $claimSet = new ClaimSet($paramSet);
-
-        $this->assertTrue($claimSet->has($claim));
+        return [
+            ClaimSetParams::ISS->value => [
+                [ClaimSetParams::ISS->value => $valueString],
+                ClaimSetParams::ISS->value,
+                $valueString,
+            ],
+            ClaimSetParams::ISS->value . ' not defined' => [
+                [],
+                ClaimSetParams::ISS->value,
+                new NoSuchElementException(),
+            ],
+            ClaimSetParams::SUB->value => [
+                [ClaimSetParams::SUB->value => $valueString],
+                ClaimSetParams::SUB->value,
+                $valueString,
+            ],
+            ClaimSetParams::SUB->value . ' not defined' => [
+                [],
+                ClaimSetParams::SUB->value,
+                new NoSuchElementException(),
+            ],
+            ClaimSetParams::AUD->value => [
+                [ClaimSetParams::AUD->value => $valueString],
+                ClaimSetParams::AUD->value,
+                $valueString,
+            ],
+            ClaimSetParams::AUD->value . ' not defined' => [
+                [],
+                ClaimSetParams::AUD->value,
+                new NoSuchElementException(),
+            ],
+            ClaimSetParams::EXP->value => [
+                [ClaimSetParams::EXP->value => $valueInt],
+                ClaimSetParams::EXP->value,
+                $valueInt,
+            ],
+            ClaimSetParams::EXP->value . ' not defined' => [
+                [],
+                ClaimSetParams::EXP->value,
+                new NoSuchElementException(),
+            ],
+            ClaimSetParams::NBF->value => [
+                [ClaimSetParams::NBF->value => $valueInt],
+                ClaimSetParams::NBF->value,
+                $valueInt,
+            ],
+            ClaimSetParams::NBF->value . ' not defined' => [
+                [],
+                ClaimSetParams::NBF->value,
+                new NoSuchElementException(),
+            ],
+            ClaimSetParams::IAT->value => [
+                [ClaimSetParams::IAT->value => $valueInt],
+                ClaimSetParams::IAT->value,
+                $valueInt,
+            ],
+            ClaimSetParams::IAT->value . ' not defined' => [
+                [],
+                ClaimSetParams::IAT->value,
+                new NoSuchElementException(),
+            ],
+            ClaimSetParams::JTI->value => [
+                [ClaimSetParams::JTI->value => $valueString],
+                ClaimSetParams::JTI->value,
+                $valueString,
+            ],
+            ClaimSetParams::JTI->value . ' not defined' => [
+                [],
+                ClaimSetParams::JTI->value,
+                new NoSuchElementException(),
+            ],
+        ];
     }
 
-    public function testDoesntHave(): void
+    /**
+     * @dataProvider provideParam
+     */
+    public function testParam(array $set, string $name, mixed $result): void
     {
-        $claim = 'claim';
-        $claimValue = 'claim_value';
-        $paramSet = [$claim => $claimValue];
+        $claimSet = new ClaimSet($set);
 
-        $claimSet = new ClaimSet($paramSet);
+        if ($result instanceof \Exception) {
+            $this->expectException(\get_class($result));
+        }
 
-        $this->assertFalse($claimSet->has('unexisted'));
+        $testResult = $claimSet->param($name)->get();
+
+        $this->assertSame($result, $testResult);
     }
 
-    public function testGet(): void
+    public function provideParam(): array
     {
-        $claim = 'claim';
-        $claimValue = 'claim_value';
-        $paramSet = [$claim => $claimValue];
+        $name = 'param_name';
+        $value = 'param_value';
 
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->get($claim)->get();
-
-        $this->assertSame($claimValue, $gotClaim);
+        return [
+            'has param' => [
+                [$name => $value],
+                $name,
+                $value,
+            ],
+            "doesn't have param" => [
+                [],
+                $name,
+                new NoSuchElementException(),
+            ],
+            'null value' => [
+                [$name => null],
+                $name,
+                new NoSuchElementException(),
+            ],
+        ];
     }
 
     public function testToArray(): void
     {
-        $claim = 'claim';
-        $claimValue = 'claim_value';
-        $paramSet = [$claim => $claimValue];
+        $set = ['param1' => 'value1', 'param2' => 'value2'];
 
-        $claimSet = new ClaimSet($paramSet);
-        $array = $claimSet->toArray();
+        $claimSet = new ClaimSet($set);
+        $testResult = $claimSet->toArray();
 
-        $this->assertSame($paramSet, $array);
-    }
-
-    public function testGetIss(): void
-    {
-        $claim = ClaimSet::ISS;
-        $claimValue = 'claim_value';
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getIss();
-
-        $this->assertSame($claimValue, $gotClaim);
-    }
-
-    public function testGetIssNull(): void
-    {
-        $claim = 'test';
-        $claimValue = 'claim_value';
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getIss();
-
-        $this->assertNull($gotClaim);
-    }
-
-    public function testGetSub(): void
-    {
-        $claim = ClaimSet::SUB;
-        $claimValue = 'claim_value';
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getSub();
-
-        $this->assertSame($claimValue, $gotClaim);
-    }
-
-    public function testGetSubNull(): void
-    {
-        $claim = 'test';
-        $claimValue = 'claim_value';
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getSub();
-
-        $this->assertNull($gotClaim);
-    }
-
-    public function testGetAud(): void
-    {
-        $claim = ClaimSet::AUD;
-        $claimValue = 'claim_value';
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getAud();
-
-        $this->assertSame($claimValue, $gotClaim);
-    }
-
-    public function testGetAudNull(): void
-    {
-        $claim = 'test';
-        $claimValue = 'claim_value';
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getAud();
-
-        $this->assertNull($gotClaim);
-    }
-
-    public function testGetExp(): void
-    {
-        $claim = ClaimSet::EXP;
-        $claimValue = 123;
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getExp();
-
-        $this->assertSame($claimValue, $gotClaim);
-    }
-
-    public function testGetExpNull(): void
-    {
-        $claim = 'test';
-        $claimValue = 123;
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getExp();
-
-        $this->assertNull($gotClaim);
-    }
-
-    public function testGetNbf(): void
-    {
-        $claim = ClaimSet::NBF;
-        $claimValue = 123;
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getNbf();
-
-        $this->assertSame($claimValue, $gotClaim);
-    }
-
-    public function testGetNbfNull(): void
-    {
-        $claim = 'test';
-        $claimValue = 123;
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getNbf();
-
-        $this->assertNull($gotClaim);
-    }
-
-    public function testGetIat(): void
-    {
-        $claim = ClaimSet::IAT;
-        $claimValue = 123;
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getIat();
-
-        $this->assertSame($claimValue, $gotClaim);
-    }
-
-    public function testGetIatNull(): void
-    {
-        $claim = 'test';
-        $claimValue = 123;
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getIat();
-
-        $this->assertNull($gotClaim);
-    }
-
-    public function testGetJti(): void
-    {
-        $claim = ClaimSet::JTI;
-        $claimValue = 'test';
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getJti();
-
-        $this->assertSame($claimValue, $gotClaim);
-    }
-
-    public function testGetJtiNull(): void
-    {
-        $claim = 'test';
-        $claimValue = 'test';
-        $paramSet = [$claim => $claimValue];
-
-        $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->getJti();
-
-        $this->assertNull($gotClaim);
+        $this->assertSame($set, $testResult);
     }
 }
