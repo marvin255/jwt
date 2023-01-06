@@ -8,6 +8,7 @@ use Marvin255\Jwt\Jwt;
 use Marvin255\Jwt\JwtBuilder;
 use Marvin255\Jwt\JwtSigner;
 use Marvin255\Jwt\Token\ClaimSet;
+use Marvin255\Jwt\Token\ClaimSetParams;
 use Marvin255\Jwt\Token\JoseHeader;
 use Marvin255\Jwt\Token\Signature;
 use Marvin255\Jwt\Token\Token;
@@ -80,7 +81,7 @@ final class Builder implements JwtBuilder
      */
     public function setIss(string $iss): JwtBuilder
     {
-        $this->claims[ClaimSet::ISS] = $iss;
+        $this->claims[ClaimSetParams::ISS->value] = $iss;
 
         return $this;
     }
@@ -90,7 +91,7 @@ final class Builder implements JwtBuilder
      */
     public function setSub(string $sub): JwtBuilder
     {
-        $this->claims[ClaimSet::SUB] = $sub;
+        $this->claims[ClaimSetParams::SUB->value] = $sub;
 
         return $this;
     }
@@ -100,7 +101,7 @@ final class Builder implements JwtBuilder
      */
     public function setAud(mixed $aud): JwtBuilder
     {
-        $this->claims[ClaimSet::AUD] = $aud;
+        $this->claims[ClaimSetParams::AUD->value] = $aud;
 
         return $this;
     }
@@ -110,7 +111,7 @@ final class Builder implements JwtBuilder
      */
     public function setExp(int $exp): JwtBuilder
     {
-        $this->claims[ClaimSet::EXP] = $exp;
+        $this->claims[ClaimSetParams::EXP->value] = $exp;
 
         return $this;
     }
@@ -120,7 +121,7 @@ final class Builder implements JwtBuilder
      */
     public function setNbf(int $nbf): JwtBuilder
     {
-        $this->claims[ClaimSet::NBF] = $nbf;
+        $this->claims[ClaimSetParams::NBF->value] = $nbf;
 
         return $this;
     }
@@ -130,7 +131,7 @@ final class Builder implements JwtBuilder
      */
     public function setIat(int $iat): JwtBuilder
     {
-        $this->claims[ClaimSet::IAT] = $iat;
+        $this->claims[ClaimSetParams::IAT->value] = $iat;
 
         return $this;
     }
@@ -140,7 +141,7 @@ final class Builder implements JwtBuilder
      */
     public function setJti(string $jti): JwtBuilder
     {
-        $this->claims[ClaimSet::JTI] = $jti;
+        $this->claims[ClaimSetParams::JTI->value] = $jti;
 
         return $this;
     }

@@ -7,6 +7,7 @@ namespace Marvin255\Jwt\Test\Token;
 use Marvin255\Jwt\Builder\Builder;
 use Marvin255\Jwt\JwtSigner;
 use Marvin255\Jwt\Test\BaseCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
@@ -24,7 +25,7 @@ class BuilderTest extends BaseCase
 
         $this->assertSame(
             $joseValue,
-            $token->jose()->get($jose)
+            $token->jose()->param($jose)->get()
         );
     }
 
@@ -39,7 +40,7 @@ class BuilderTest extends BaseCase
 
         $this->assertSame(
             $joseValue,
-            $token->jose()->get($jose)
+            $token->jose()->param($jose)->get()
         );
     }
 
@@ -54,7 +55,7 @@ class BuilderTest extends BaseCase
 
         $this->assertSame(
             $claimValue,
-            $token->claims()->get($claim)
+            $token->claims()->param($claim)->get()
         );
     }
 
@@ -69,7 +70,7 @@ class BuilderTest extends BaseCase
 
         $this->assertSame(
             $claimValue,
-            $token->claims()->get($claim)
+            $token->claims()->param($claim)->get()
         );
     }
 
@@ -83,7 +84,7 @@ class BuilderTest extends BaseCase
 
         $this->assertSame(
             $claimValue,
-            $token->claims()->getIss()
+            $token->claims()->iss()->get()
         );
     }
 
@@ -97,7 +98,7 @@ class BuilderTest extends BaseCase
 
         $this->assertSame(
             $claimValue,
-            $token->claims()->getSub()
+            $token->claims()->sub()->get()
         );
     }
 
@@ -111,7 +112,7 @@ class BuilderTest extends BaseCase
 
         $this->assertSame(
             $claimValue,
-            $token->claims()->getAud()
+            $token->claims()->aud()->get()
         );
     }
 
@@ -125,7 +126,7 @@ class BuilderTest extends BaseCase
 
         $this->assertSame(
             $claimValue,
-            $token->claims()->getExp()
+            $token->claims()->exp()->get()
         );
     }
 
@@ -139,7 +140,7 @@ class BuilderTest extends BaseCase
 
         $this->assertSame(
             $claimValue,
-            $token->claims()->getNbf()
+            $token->claims()->nbf()->get()
         );
     }
 
@@ -153,7 +154,7 @@ class BuilderTest extends BaseCase
 
         $this->assertSame(
             $claimValue,
-            $token->claims()->getIat()
+            $token->claims()->iat()->get()
         );
     }
 
@@ -167,7 +168,7 @@ class BuilderTest extends BaseCase
 
         $this->assertSame(
             $claimValue,
-            $token->claims()->getJti()
+            $token->claims()->jti()->get()
         );
     }
 
@@ -200,6 +201,7 @@ class BuilderTest extends BaseCase
 
         $signature = 'signature';
 
+        /** @var MockObject&JwtSigner */
         $signer = $this->getMockBuilder(JwtSigner::class)->getMock();
         $signer->method('updateJoseParams')
             ->with(
@@ -227,7 +229,7 @@ class BuilderTest extends BaseCase
         );
         $this->assertSame(
             $joseValue,
-            $token->jose()->get($jose)
+            $token->jose()->param($jose)->get()
         );
     }
 }
