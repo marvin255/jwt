@@ -11,9 +11,6 @@ final class Signature
 {
     private readonly string $signature;
 
-    /**
-     * @param string $signature
-     */
     public function __construct(string $signature = '')
     {
         $this->signature = $signature;

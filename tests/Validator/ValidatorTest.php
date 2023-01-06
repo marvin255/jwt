@@ -69,8 +69,6 @@ class ValidatorTest extends BaseCase
     }
 
     /**
-     * @param Jwt $token
-     *
      * @return Constraint[]
      */
     private function createValidConstraintsForToken(Jwt $token): array
@@ -99,8 +97,6 @@ class ValidatorTest extends BaseCase
     }
 
     /**
-     * @param Jwt $token
-     *
      * @return Constraint[]
      */
     private function createInvalidConstraintsForToken(Jwt $token): array

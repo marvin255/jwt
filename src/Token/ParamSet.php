@@ -36,7 +36,6 @@ abstract class ParamSet
      */
     public function param(string $name): Optional
     {
-        /** @var mixed */
         $value = $this->params[$name] ?? null;
 
         return Optional::ofNullable($value);
