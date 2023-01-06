@@ -52,7 +52,7 @@ class ClaimSetTest extends BaseCase
         $paramSet = [$claim => $claimValue];
 
         $claimSet = new ClaimSet($paramSet);
-        $gotClaim = $claimSet->get($claim);
+        $gotClaim = $claimSet->get($claim)->get();
 
         $this->assertSame($claimValue, $gotClaim);
     }

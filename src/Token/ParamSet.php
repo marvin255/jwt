@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Marvin255\Jwt\Token;
 
-use Marvin255\Jwt\Exception\JwtException;
+use Marvin255\Optional\Optional;
 
 /**
  * Simple key/value storage for a list of params.
@@ -18,11 +18,6 @@ abstract class ParamSet
      */
     private readonly array $params;
 
-    /**
-     * @param iterable $params
-     *
-     * @throws JwtException
-     */
     public function __construct(iterable $params = [])
     {
         $setParams = [];
@@ -33,29 +28,16 @@ abstract class ParamSet
     }
 
     /**
-     * Checks that set has param with set name.
-     *
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function has(string $name): bool
-    {
-        return \array_key_exists($name, $this->params);
-    }
-
-    /**
      * Returns value by set param name.
      *
-     * @param string $name
-     *
-     * @return mixed
+     * @return Optional<mixed>
      */
-    public function get(string $name, mixed $default = null): mixed
+    public function param(string $name): Optional
     {
-        return \array_key_exists($name, $this->params)
-            ? $this->params[$name]
-            : $default;
+        /** @var mixed */
+        $value = $this->params[$name] ?? null;
+
+        return Optional::ofNullable($value);
     }
 
     /**
@@ -69,30 +51,47 @@ abstract class ParamSet
     }
 
     /**
-     * Returns named parameter as string or null if it doesn't exist.
+     * Returns named parameter as string.
      *
-     * @param string $name
-     *
-     * @return string|null
+     * @return Optional<string>
      */
-    protected function getOptionalString(string $name): ?string
+    protected function getOptionalString(string $name): Optional
     {
-        return isset($this->params[$name])
-            ? (string) $this->params[$name]
-            : null;
+        /** @var Optional<string> */
+        $optional = isset($this->params[$name])
+            ? Optional::of((string) $this->params[$name])
+            : Optional::empty();
+
+        return $optional;
     }
 
     /**
-     * Returns named parameter as int or null if it doesn't exist.
+     * Returns named parameter as int.
      *
-     * @param string $name
-     *
-     * @return int|null
+     * @return Optional<int>
      */
-    protected function getOptionalInt(string $name): ?int
+    protected function getOptionalInt(string $name): Optional
     {
-        return isset($this->params[$name])
-            ? (int) $this->params[$name]
-            : null;
+        /** @var Optional<int> */
+        $optional = isset($this->params[$name])
+            ? Optional::of((int) $this->params[$name])
+            : Optional::empty();
+
+        return $optional;
+    }
+
+    /**
+     * Returns named parameter as array.
+     *
+     * @return Optional<array>
+     */
+    protected function getOptionalArray(string $name): Optional
+    {
+        /** @var Optional<array> */
+        $optional = isset($this->params[$name])
+            ? Optional::of((array) $this->params[$name])
+            : Optional::empty();
+
+        return $optional;
     }
 }
