@@ -48,7 +48,7 @@ final class Builder implements JwtBuilder
     public function setJoseParams(array $params): JwtBuilder
     {
         foreach ($params as $name => $value) {
-            $this->setJoseParam((string) $name, $value);
+            $this->setJoseParam($name, $value);
         }
 
         return $this;
@@ -70,7 +70,7 @@ final class Builder implements JwtBuilder
     public function setClaims(array $claims): JwtBuilder
     {
         foreach ($claims as $name => $value) {
-            $this->setClaim((string) $name, $value);
+            $this->setClaim($name, $value);
         }
 
         return $this;

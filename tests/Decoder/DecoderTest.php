@@ -10,6 +10,7 @@ use Marvin255\Jwt\Helper\Base64;
 use Marvin255\Jwt\Jwt;
 use Marvin255\Jwt\JwtBuilder;
 use Marvin255\Jwt\Test\BaseCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
@@ -33,6 +34,7 @@ class DecoderTest extends BaseCase
             . '.xGknUYTHzJEQ5YIp2cXaZpU4m0RPJtqBZHjowGQGMx8';
         $awaitedToken = $this->getMockBuilder(Jwt::class)->getMock();
 
+        /** @var MockObject&JwtBuilder */
         $builder = $this->getMockBuilder(JwtBuilder::class)->getMock();
         $builder->expects($this->once())
             ->method('setJoseParams')
@@ -68,6 +70,7 @@ class DecoderTest extends BaseCase
 
     public function testDecodeHeaderWrongHeaderException(): void
     {
+        /** @var MockObject&JwtBuilder */
         $builder = $this->getMockBuilder(JwtBuilder::class)->getMock();
 
         $decoder = new Decoder($builder);
@@ -78,6 +81,7 @@ class DecoderTest extends BaseCase
 
     public function testIncompleteTokenException(): void
     {
+        /** @var MockObject&JwtBuilder */
         $builder = $this->getMockBuilder(JwtBuilder::class)->getMock();
 
         $decoder = new Decoder($builder);
@@ -88,6 +92,7 @@ class DecoderTest extends BaseCase
 
     public function testBadJsonException(): void
     {
+        /** @var MockObject&JwtBuilder */
         $builder = $this->getMockBuilder(JwtBuilder::class)->getMock();
 
         $decoder = new Decoder($builder);

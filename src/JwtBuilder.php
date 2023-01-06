@@ -16,6 +16,8 @@ interface JwtBuilder
 
     /**
      * Sets array of JOSE header params.
+     *
+     * @param array<string, mixed> $params
      */
     public function setJoseParams(array $params): JwtBuilder;
 
@@ -26,6 +28,8 @@ interface JwtBuilder
 
     /**
      * Sets array of claims.
+     *
+     * @param array<string, mixed> $claims
      */
     public function setClaims(array $claims): JwtBuilder;
 
