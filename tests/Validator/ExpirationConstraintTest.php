@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Marvin255\Jwt\Test\Validator;
 
 use Marvin255\Jwt\Test\BaseCase;
-use Marvin255\Jwt\Token\ClaimSet;
+use Marvin255\Jwt\Token\ClaimSetParams;
 use Marvin255\Jwt\Validator\ExpirationConstraint;
 
 /**
@@ -22,7 +22,7 @@ class ExpirationConstraintTest extends BaseCase
         $claims = [];
 
         if ($timeAdd !== null) {
-            $claims[ClaimSet::EXP] = time() + $timeAdd;
+            $claims[ClaimSetParams::EXP->value] = time() + $timeAdd;
         }
 
         $token = $this->getTokenMock($jose, $claims);

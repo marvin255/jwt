@@ -26,8 +26,6 @@ final class JwtFactory
 
     /**
      * Creates and returns decoder object.
-     *
-     * @return JwtDecoder
      */
     public static function decoder(): JwtDecoder
     {
@@ -40,8 +38,6 @@ final class JwtFactory
 
     /**
      * Creates and returns encoder object.
-     *
-     * @return JwtEncoder
      */
     public static function encoder(): JwtEncoder
     {
@@ -54,8 +50,6 @@ final class JwtFactory
 
     /**
      * Creates and returns encoder object.
-     *
-     * @return JwtValidator
      */
     public static function validator(): JwtValidator
     {
@@ -68,8 +62,6 @@ final class JwtFactory
 
     /**
      * Creates and returns builder object.
-     *
-     * @return JwtBuilder
      */
     public static function builder(): JwtBuilder
     {

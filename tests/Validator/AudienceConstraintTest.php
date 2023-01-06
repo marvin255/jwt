@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Marvin255\Jwt\Test\Validator;
 
 use Marvin255\Jwt\Test\BaseCase;
-use Marvin255\Jwt\Token\ClaimSet;
+use Marvin255\Jwt\Token\ClaimSetParams;
 use Marvin255\Jwt\Validator\AudienceConstraint;
 
 /**
@@ -22,7 +22,7 @@ class AudienceConstraintTest extends BaseCase
         $claims = [];
 
         if ($tokenAudience !== null) {
-            $claims[ClaimSet::AUD] = $tokenAudience;
+            $claims[ClaimSetParams::AUD->value] = $tokenAudience;
         }
 
         $token = $this->getTokenMock($jose, $claims);

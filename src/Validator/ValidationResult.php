@@ -17,7 +17,6 @@ final class ValidationResult
     private readonly array $errors;
 
     /**
-     * @param bool     $isValid
      * @param string[] $errors
      */
     public function __construct(bool $isValid, array $errors = [])
@@ -28,8 +27,6 @@ final class ValidationResult
 
     /**
      * Returns true if token is valid.
-     *
-     * @return bool
      */
     public function isValid(): bool
     {

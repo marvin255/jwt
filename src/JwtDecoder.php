@@ -14,20 +14,12 @@ interface JwtDecoder
     /**
      * Decodes token object from string.
      *
-     * @param string $tokenString
-     *
-     * @return Jwt
-     *
      * @throws JwtException
      */
     public function decodeString(string $tokenString): Jwt;
 
     /**
      * Decodes token object from HTTP header.
-     *
-     * @param string $httpHeader
-     *
-     * @return Jwt
      *
      * @throws JwtException
      */

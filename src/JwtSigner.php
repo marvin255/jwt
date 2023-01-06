@@ -23,17 +23,11 @@ interface JwtSigner
      *
      * @param array<string, mixed> $joseParams
      * @param array<string, mixed> $claims
-     *
-     * @return string
      */
     public function createSignature(array $joseParams, array $claims): string;
 
     /**
      * Verifies token signature.
-     *
-     * @param Jwt $token
-     *
-     * @return bool
      */
     public function verifyToken(Jwt $token): bool;
 }

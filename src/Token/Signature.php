@@ -21,8 +21,6 @@ final class Signature
 
     /**
      * Returns signature string.
-     *
-     * @return string
      */
     public function getSignatureString(): string
     {

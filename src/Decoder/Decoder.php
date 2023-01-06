@@ -60,8 +60,6 @@ final class Decoder implements JwtDecoder
     /**
      * Explodes token to a basic parts.
      *
-     * @param string $token
-     *
      * @return string[]
      */
     private function explodeToken(string $token): array
@@ -80,8 +78,6 @@ final class Decoder implements JwtDecoder
      *
      * @param string[] $tokenParts
      *
-     * @return array
-     *
      * @throws JwtException
      */
     private function decodeTokenParts(array $tokenParts): array
@@ -95,10 +91,6 @@ final class Decoder implements JwtDecoder
 
     /**
      * Decodes token part that contains object to array.
-     *
-     * @param string $part
-     *
-     * @return array
      */
     private function decodeJsonObject(string $part): array
     {

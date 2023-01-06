@@ -23,13 +23,13 @@ final class ExpirationConstraint implements Constraint
      */
     public function checkToken(Jwt $token): bool
     {
-        $expHeader = $token->claims()->getExp();
+        $expHeader = $token->claims()->exp();
 
-        if ($expHeader === null) {
+        if (!$expHeader->isPresent()) {
             return true;
         }
 
-        return $expHeader >= (time() - $this->leeway);
+        return $expHeader->get() >= (time() - $this->leeway);
     }
 
     /**

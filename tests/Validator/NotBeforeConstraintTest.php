@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Marvin255\Jwt\Test\Validator;
 
 use Marvin255\Jwt\Test\BaseCase;
-use Marvin255\Jwt\Token\ClaimSet;
+use Marvin255\Jwt\Token\ClaimSetParams;
 use Marvin255\Jwt\Validator\NotBeforeConstraint;
 
 /**
@@ -22,7 +22,7 @@ class NotBeforeConstraintTest extends BaseCase
         $claims = [];
 
         if ($timeAdd !== null) {
-            $claims[ClaimSet::NBF] = time() + $timeAdd;
+            $claims[ClaimSetParams::NBF->value] = time() + $timeAdd;
         }
 
         $token = $this->getTokenMock($jose, $claims);

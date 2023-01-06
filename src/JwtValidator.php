@@ -15,10 +15,7 @@ interface JwtValidator
     /**
      * Validates token against set sonstraints.
      *
-     * @param Jwt                          $token
      * @param Constraint|Constraint[]|null $constraints
-     *
-     * @return ValidationResult
      */
     public function validate(Jwt $token, Constraint|array|null $constraints = null): ValidationResult;
 }

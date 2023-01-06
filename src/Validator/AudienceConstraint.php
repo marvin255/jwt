@@ -23,17 +23,19 @@ final class AudienceConstraint implements Constraint
      */
     public function checkToken(Jwt $token): bool
     {
-        $audHeader = $token->claims()->getAud();
+        $audHeader = $token->claims()->aud();
 
-        if (empty($audHeader)) {
+        if (!$audHeader->isPresent()) {
             return false;
         }
 
-        if (\is_array($audHeader)) {
-            return \in_array($this->awaitedAudience, $audHeader, true);
+        $value = $audHeader->get();
+
+        if (\is_array($value)) {
+            return \in_array($this->awaitedAudience, $value, true);
         }
 
-        return $audHeader === $this->awaitedAudience;
+        return $value === $this->awaitedAudience;
     }
 
     /**

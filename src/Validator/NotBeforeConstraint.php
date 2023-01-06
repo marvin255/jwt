@@ -23,13 +23,13 @@ final class NotBeforeConstraint implements Constraint
      */
     public function checkToken(Jwt $token): bool
     {
-        $nbfHeader = $token->claims()->getNbf();
+        $nbfHeader = $token->claims()->nbf();
 
-        if ($nbfHeader === null) {
+        if (!$nbfHeader->isPresent()) {
             return true;
         }
 
-        return $nbfHeader <= (time() + $this->leeway);
+        return $nbfHeader->get() <= (time() + $this->leeway);
     }
 
     /**

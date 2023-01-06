@@ -11,10 +11,6 @@ interface JwtEncoder
 {
     /**
      * Encodes token object to string.
-     *
-     * @param Jwt $token
-     *
-     * @return string
      */
     public function encode(Jwt $token): string;
 }
