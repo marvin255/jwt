@@ -29,4 +29,26 @@ enum Algorithm: string
             default => '',
         };
     }
+
+    public function getImplementation(): string
+    {
+        return match ($this) {
+            Algorithm::HMAC_SHA_256 => HmacSha256Signer::class,
+            Algorithm::HMAC_SHA_384 => HmacSha384Signer::class,
+            Algorithm::HMAC_SHA_512 => HmacSha512Signer::class,
+            Algorithm::RSA_SHA_256 => RsaSha256Signer::class,
+            Algorithm::RSA_SHA_384 => RsaSha384Signer::class,
+            Algorithm::RSA_SHA_512 => RsaSha512Signer::class,
+            default => '',
+        };
+    }
+
+    public function getType(): AlgorithmType
+    {
+        return match ($this) {
+            Algorithm::HMAC_SHA_256, Algorithm::HMAC_SHA_384, Algorithm::HMAC_SHA_512 => AlgorithmType::HMAC,
+            Algorithm::RSA_SHA_256, Algorithm::RSA_SHA_384, Algorithm::RSA_SHA_512 => AlgorithmType::RSA,
+            Algorithm::NONE => AlgorithmType::NONE,
+        };
+    }
 }
