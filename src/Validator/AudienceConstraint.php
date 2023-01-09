@@ -9,9 +9,9 @@ use Marvin255\Jwt\Jwt;
 /**
  * Constraint that checks that token can be used by this client.
  */
-class AudienceConstraint implements Constraint
+final class AudienceConstraint implements Constraint
 {
-    private string $awaitedAudience;
+    private readonly string $awaitedAudience;
 
     public function __construct(string $awaitedAudience)
     {
@@ -23,17 +23,19 @@ class AudienceConstraint implements Constraint
      */
     public function checkToken(Jwt $token): bool
     {
-        $audHeader = $token->claims()->getAud();
+        $audHeader = $token->claims()->aud();
 
-        if (empty($audHeader)) {
+        if (!$audHeader->isPresent()) {
             return false;
         }
 
-        if (\is_array($audHeader)) {
-            return \in_array($this->awaitedAudience, $audHeader, true);
+        $value = $audHeader->get();
+
+        if (\is_array($value)) {
+            return \in_array($this->awaitedAudience, $value, true);
         }
 
-        return $audHeader === $this->awaitedAudience;
+        return $value === $this->awaitedAudience;
     }
 
     /**

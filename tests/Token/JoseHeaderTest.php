@@ -6,330 +6,215 @@ namespace Marvin255\Jwt\Test\Token;
 
 use Marvin255\Jwt\Test\BaseCase;
 use Marvin255\Jwt\Token\JoseHeader;
+use Marvin255\Jwt\Token\JoseHeaderParams;
+use Marvin255\Optional\NoSuchElementException;
 
 /**
  * @internal
  */
 class JoseHeaderTest extends BaseCase
 {
-    public function testHas(): void
+    /**
+     * @dataProvider provideJoseGetter
+     *
+     * @psalm-suppress MixedMethodCall
+     */
+    public function testJoseGetter(array $set, string $getter, mixed $result): void
     {
-        $param = 'param';
-        $paramValue = 'param_value';
-        $paramSet = [$param => $paramValue];
+        $jose = new JoseHeader($set);
 
-        $jose = new JoseHeader($paramSet);
+        if ($result instanceof \Exception) {
+            $this->expectException(\get_class($result));
+        }
 
-        $this->assertTrue($jose->has($param));
+        $testResult = $jose->$getter()->get();
+
+        $this->assertSame($result, $testResult);
     }
 
-    public function testHasNull(): void
+    public function provideJoseGetter(): array
     {
-        $param = 'param';
-        $paramValue = null;
-        $paramSet = [$param => $paramValue];
+        $value = 'test';
 
-        $jose = new JoseHeader($paramSet);
-
-        $this->assertTrue($jose->has($param));
+        return [
+            JoseHeaderParams::TYP->value => [
+                [JoseHeaderParams::TYP->value => $value],
+                JoseHeaderParams::TYP->value,
+                $value,
+            ],
+            JoseHeaderParams::TYP->value . ' int value' => [
+                [JoseHeaderParams::TYP->value => 123],
+                JoseHeaderParams::TYP->value,
+                '123',
+            ],
+            JoseHeaderParams::TYP->value . ' not defined' => [
+                [],
+                JoseHeaderParams::TYP->value,
+                new NoSuchElementException(),
+            ],
+            JoseHeaderParams::CTY->value => [
+                [JoseHeaderParams::CTY->value => $value],
+                JoseHeaderParams::CTY->value,
+                $value,
+            ],
+            JoseHeaderParams::CTY->value . ' not defined' => [
+                [],
+                JoseHeaderParams::CTY->value,
+                new NoSuchElementException(),
+            ],
+            JoseHeaderParams::ALG->value => [
+                [JoseHeaderParams::ALG->value => $value],
+                JoseHeaderParams::ALG->value,
+                $value,
+            ],
+            JoseHeaderParams::ALG->value . ' not defined' => [
+                [],
+                JoseHeaderParams::ALG->value,
+                new NoSuchElementException(),
+            ],
+            JoseHeaderParams::JKU->value => [
+                [JoseHeaderParams::JKU->value => $value],
+                JoseHeaderParams::JKU->value,
+                $value,
+            ],
+            JoseHeaderParams::JKU->value . ' not defined' => [
+                [],
+                JoseHeaderParams::JKU->value,
+                new NoSuchElementException(),
+            ],
+            JoseHeaderParams::JWK->value => [
+                [JoseHeaderParams::JWK->value => $value],
+                JoseHeaderParams::JWK->value,
+                $value,
+            ],
+            JoseHeaderParams::JWK->value . ' not defined' => [
+                [],
+                JoseHeaderParams::JWK->value,
+                new NoSuchElementException(),
+            ],
+            JoseHeaderParams::KID->value => [
+                [JoseHeaderParams::KID->value => $value],
+                JoseHeaderParams::KID->value,
+                $value,
+            ],
+            JoseHeaderParams::KID->value . ' not defined' => [
+                [],
+                JoseHeaderParams::KID->value,
+                new NoSuchElementException(),
+            ],
+            JoseHeaderParams::X5U->value => [
+                [JoseHeaderParams::X5U->value => $value],
+                JoseHeaderParams::X5U->value,
+                $value,
+            ],
+            JoseHeaderParams::X5U->value . ' not defined' => [
+                [],
+                JoseHeaderParams::X5U->value,
+                new NoSuchElementException(),
+            ],
+            JoseHeaderParams::X5C->value => [
+                [JoseHeaderParams::X5C->value => $value],
+                JoseHeaderParams::X5C->value,
+                $value,
+            ],
+            JoseHeaderParams::X5C->value . ' not defined' => [
+                [],
+                JoseHeaderParams::X5C->value,
+                new NoSuchElementException(),
+            ],
+            JoseHeaderParams::X5T->value => [
+                [JoseHeaderParams::X5T->value => $value],
+                JoseHeaderParams::X5T->value,
+                $value,
+            ],
+            JoseHeaderParams::X5T->value . ' not defined' => [
+                [],
+                JoseHeaderParams::X5T->value,
+                new NoSuchElementException(),
+            ],
+            JoseHeaderParams::X5T256->value => [
+                [JoseHeaderParams::X5T256->value => $value],
+                'x5t256',
+                $value,
+            ],
+            JoseHeaderParams::X5T256->value . ' not defined' => [
+                [],
+                'x5t256',
+                new NoSuchElementException(),
+            ],
+            JoseHeaderParams::CRIT->value => [
+                [JoseHeaderParams::CRIT->value => ['param' => 'value']],
+                JoseHeaderParams::CRIT->value,
+                ['param' => 'value'],
+            ],
+            JoseHeaderParams::CRIT->value . ' not an array value' => [
+                [JoseHeaderParams::CRIT->value => 'test'],
+                JoseHeaderParams::CRIT->value,
+                new NoSuchElementException(),
+            ],
+            JoseHeaderParams::CRIT->value . ' not defined' => [
+                [],
+                JoseHeaderParams::CRIT->value,
+                new NoSuchElementException(),
+            ],
+        ];
     }
 
-    public function testDoesntHave(): void
+    /**
+     * @dataProvider provideParam
+     */
+    public function testParam(array $set, string $name, mixed $result): void
     {
-        $param = 'param';
-        $paramValue = 'param_value';
-        $paramSet = [$param => $paramValue];
+        $jose = new JoseHeader($set);
 
-        $jose = new JoseHeader($paramSet);
+        if ($result instanceof \Exception) {
+            $this->expectException(\get_class($result));
+        }
 
-        $this->assertFalse($jose->has('unexisted'));
+        $testResult = $jose->param($name)->get();
+
+        $this->assertSame($result, $testResult);
     }
 
-    public function testGetParam(): void
+    public function provideParam(): array
     {
-        $param = 'param';
-        $paramValue = 'param_value';
-        $paramSet = [$param => $paramValue];
+        $name = 'param_name';
+        $value = 'param_value';
 
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->get($param);
-
-        $this->assertSame($paramValue, $gotParam);
+        return [
+            'has param' => [
+                [$name => $value],
+                $name,
+                $value,
+            ],
+            "doesn't have param" => [
+                [],
+                $name,
+                new NoSuchElementException(),
+            ],
+            'null value' => [
+                [$name => null],
+                $name,
+                new NoSuchElementException(),
+            ],
+        ];
     }
 
     public function testToArray(): void
     {
-        $param = 'param';
-        $paramValue = 'param_value';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $array = $jose->toArray();
-
-        $this->assertSame($paramSet, $array);
-    }
-
-    public function testGetTyp(): void
-    {
-        $param = JoseHeader::TYP;
-        $paramValue = 'JWT';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getTyp();
-
-        $this->assertSame($paramValue, $gotParam);
-    }
-
-    public function testGetTypNull(): void
-    {
-        $param = 'test';
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getTyp();
-
-        $this->assertNull($gotParam);
-    }
-
-    public function testGetCty(): void
-    {
-        $param = JoseHeader::CTY;
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getCty();
-
-        $this->assertSame($paramValue, $gotParam);
-    }
-
-    public function testGetCtyNull(): void
-    {
-        $param = 'test';
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getCty();
-
-        $this->assertNull($gotParam);
-    }
-
-    public function testGetAlg(): void
-    {
-        $param = JoseHeader::ALG;
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getAlg();
-
-        $this->assertSame($paramValue, $gotParam);
-    }
-
-    public function testGetAlgNull(): void
-    {
-        $param = 'test';
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getAlg();
-
-        $this->assertNull($gotParam);
-    }
-
-    public function testGetJku(): void
-    {
-        $param = JoseHeader::JKU;
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getJku();
-
-        $this->assertSame($paramValue, $gotParam);
-    }
-
-    public function testGetJkuNull(): void
-    {
-        $param = 'test';
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getJku();
-
-        $this->assertNull($gotParam);
-    }
-
-    public function testGetJwk(): void
-    {
-        $param = JoseHeader::JWK;
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getJwk();
-
-        $this->assertSame($paramValue, $gotParam);
-    }
-
-    public function testGetJwkNull(): void
-    {
-        $param = 'test';
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getJwk();
-
-        $this->assertNull($gotParam);
-    }
-
-    public function testGetKid(): void
-    {
-        $param = JoseHeader::KID;
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getKid();
-
-        $this->assertSame($paramValue, $gotParam);
-    }
-
-    public function testGetKidNull(): void
-    {
-        $param = 'test';
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getKid();
-
-        $this->assertNull($gotParam);
-    }
-
-    public function testGetX5u(): void
-    {
-        $param = JoseHeader::X5U;
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getX5u();
-
-        $this->assertSame($paramValue, $gotParam);
-    }
-
-    public function testGetX5uNull(): void
-    {
-        $param = 'test';
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getX5u();
-
-        $this->assertNull($gotParam);
-    }
-
-    public function testGetX5c(): void
-    {
-        $param = JoseHeader::X5C;
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getX5c();
-
-        $this->assertSame($paramValue, $gotParam);
-    }
-
-    public function testGetX5cNull(): void
-    {
-        $param = 'test';
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getX5c();
-
-        $this->assertNull($gotParam);
-    }
-
-    public function testGetX5t(): void
-    {
-        $param = JoseHeader::X5T;
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getX5t();
-
-        $this->assertSame($paramValue, $gotParam);
-    }
-
-    public function testGetX5tNull(): void
-    {
-        $param = 'test';
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getX5t();
-
-        $this->assertNull($gotParam);
-    }
-
-    public function testGetX5t256(): void
-    {
-        $param = JoseHeader::X5T256;
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getX5t256();
-
-        $this->assertSame($paramValue, $gotParam);
-    }
-
-    public function testGetX5t256Null(): void
-    {
-        $param = 'test';
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getX5t256();
-
-        $this->assertNull($gotParam);
-    }
-
-    public function testGetCrit(): void
-    {
-        $param = JoseHeader::CRIT;
-        $paramValue = ['test'];
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getCrit();
-
-        $this->assertSame($paramValue, $gotParam);
-    }
-
-    public function testGetCritNull(): void
-    {
-        $param = 'test';
-        $paramValue = 'test';
-        $paramSet = [$param => $paramValue];
-
-        $jose = new JoseHeader($paramSet);
-        $gotParam = $jose->getCrit();
-
-        $this->assertNull($gotParam);
+        $set = [
+            'param1' => 'value1',
+            'param2' => 'value2',
+            'param3' => null,
+        ];
+        $resultSet = [
+            'param1' => 'value1',
+            'param2' => 'value2',
+        ];
+
+        $jose = new JoseHeader($set);
+        $testSet = $jose->toArray();
+
+        $this->assertSame($resultSet, $testSet);
     }
 }

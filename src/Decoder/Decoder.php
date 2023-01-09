@@ -9,14 +9,13 @@ use Marvin255\Jwt\Helper\Base64;
 use Marvin255\Jwt\Jwt;
 use Marvin255\Jwt\JwtBuilder;
 use Marvin255\Jwt\JwtDecoder;
-use Throwable;
 
 /**
  * Basic decoder that converts string to token object.
  */
-class Decoder implements JwtDecoder
+final class Decoder implements JwtDecoder
 {
-    private JwtBuilder $builder;
+    private readonly JwtBuilder $builder;
 
     public function __construct(JwtBuilder $builder)
     {
@@ -29,19 +28,18 @@ class Decoder implements JwtDecoder
     public function decodeString(string $tokenString): Jwt
     {
         $tokenParts = $this->explodeToken($tokenString);
-        $decodedTokenParts = $this->decodeTokenParts($tokenParts);
 
-        if (!empty($decodedTokenParts[0]) && \is_array($decodedTokenParts[0])) {
-            $this->builder->setJoseParams($decodedTokenParts[0]);
-        }
+        $this->builder->setJoseParams(
+            $this->decodeJsonObject($tokenParts[0])
+        );
 
-        if (!empty($decodedTokenParts[1]) && \is_array($decodedTokenParts[1])) {
-            $this->builder->setClaims($decodedTokenParts[1]);
-        }
+        $this->builder->setClaims(
+            $this->decodeJsonObject($tokenParts[1])
+        );
 
-        if (!empty($decodedTokenParts[2]) && \is_string($decodedTokenParts[2])) {
-            $this->builder->setSignature($decodedTokenParts[2]);
-        }
+        $this->builder->setSignature(
+            Base64::urlDecode($tokenParts[2])
+        );
 
         return $this->builder->build();
     }
@@ -51,9 +49,8 @@ class Decoder implements JwtDecoder
      */
     public function decodeHeader(string $httpHeader): Jwt
     {
-        if (!preg_match('/^(?:\s+)?Bearer\s(.+)$/', $httpHeader, $matches)) {
-            $message = sprintf("Can't recognize jwt header in string: %s.", $httpHeader);
-            throw new JwtException($message);
+        if (!preg_match('/Bearer\s(.+)/i', $httpHeader, $matches)) {
+            throw new JwtException(sprintf("Can't recognize jwt header in string: %s", $httpHeader));
         }
 
         return $this->decodeString($matches[1]);
@@ -62,54 +59,33 @@ class Decoder implements JwtDecoder
     /**
      * Explodes token to a basic parts.
      *
-     * @param string $token
-     *
      * @return string[]
+     *
+     * @psalm-return list{string, string, string}
      */
     private function explodeToken(string $token): array
     {
         $tokenParts = explode('.', $token);
 
         if (\count($tokenParts) !== 3) {
-            $message = 'Token string must contains 3 parts.';
-            throw new JwtException($message);
+            throw new JwtException('Token string must contain 3 parts');
         }
 
         return $tokenParts;
     }
 
     /**
-     * Decodes token parts to arrays.
-     *
-     * @param string[] $tokenParts
-     *
-     * @return array
-     *
-     * @throws JwtException
-     */
-    private function decodeTokenParts(array $tokenParts): array
-    {
-        return [
-            $this->decodeJsonObject($tokenParts[0]),
-            $this->decodeJsonObject($tokenParts[1]),
-            Base64::urlDecode($tokenParts[2]),
-        ];
-    }
-
-    /**
      * Decodes token part that contains object to array.
      *
-     * @param string $part
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     private function decodeJsonObject(string $part): array
     {
         try {
+            /** @var array<string, mixed> */
             $decoded = Base64::arrayDecode($part);
-        } catch (Throwable $e) {
-            $message = sprintf("Can't decode token object: %s.", $e->getMessage());
-            throw new JwtException($message);
+        } catch (\Throwable $e) {
+            throw new JwtException(sprintf("Can't decode token object: %s", $e->getMessage()));
         }
 
         return $decoded;

@@ -11,22 +11,23 @@ use Marvin255\Jwt\JwtValidator;
 /**
  * Basic validator object.
  */
-class Validator implements JwtValidator
+final class Validator implements JwtValidator
 {
     /**
      * @var Constraint[]
      */
-    private array $defaultConstraints = [];
+    private readonly array $defaultConstraints;
 
     public function __construct(iterable $defaultConstraints = [])
     {
+        $constraints = [];
         foreach ($defaultConstraints as $defaultConstraint) {
             if (!($defaultConstraint instanceof Constraint)) {
-                $message = sprintf("Constraint item must be instance of '%s'.", Constraint::class);
-                throw new JwtException($message);
+                throw new JwtException(sprintf("Constraint item must be instance of '%s'", Constraint::class));
             }
-            $this->defaultConstraints[] = $defaultConstraint;
+            $constraints[] = $defaultConstraint;
         }
+        $this->defaultConstraints = $constraints;
     }
 
     /**

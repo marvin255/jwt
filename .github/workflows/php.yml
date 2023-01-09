@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php-versions: ['8.0', '8.1']
+        php-versions: ['8.1']
     steps:
     - uses: actions/checkout@v2
     - name: Install PHP
@@ -39,3 +39,5 @@ jobs:
       run: composer run-script test
     - name: Run linters
       run: composer run-script linter
+    - name: Run infection
+      run: composer run-script infection

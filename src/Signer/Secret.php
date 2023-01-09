@@ -11,15 +11,11 @@ interface Secret
 {
     /**
      * Return secret as string.
-     *
-     * @return string
      */
     public function getSecret(): string;
 
     /**
      * Return password phase for current secret or null if there is no passpharse.
-     *
-     * @return string
      */
     public function getPassPhrase(): ?string;
 }

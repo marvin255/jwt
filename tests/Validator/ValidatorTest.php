@@ -68,9 +68,26 @@ class ValidatorTest extends BaseCase
         $this->assertSame(['error'], $response->getErrors());
     }
 
+    public function testValidateSingleConstraint(): void
+    {
+        $token = $this->getTokenMock();
+        /** @var Constraint&MockObject */
+        $constraint = $this->getMockBuilder(Constraint::class)->getMock();
+        $constraint->expects($this->once())
+            ->method('checkToken')
+            ->with(
+                $this->identicalTo($token)
+            )
+            ->willReturn(true);
+        $constraint->expects($this->never())->method('createErrorMessage');
+
+        $validator = new Validator();
+        $response = $validator->validate($token, $constraint);
+
+        $this->assertTrue($response->isValid());
+    }
+
     /**
-     * @param Jwt $token
-     *
      * @return Constraint[]
      */
     private function createValidConstraintsForToken(Jwt $token): array
@@ -99,8 +116,6 @@ class ValidatorTest extends BaseCase
     }
 
     /**
-     * @param Jwt $token
-     *
      * @return Constraint[]
      */
     private function createInvalidConstraintsForToken(Jwt $token): array
@@ -130,6 +145,10 @@ class ValidatorTest extends BaseCase
             )
             ->willReturn('error');
 
-        return [$constraint, $constraint1];
+        /** @var Constraint&MockObject */
+        $constraint2 = $this->getMockBuilder(Constraint::class)->getMock();
+        $constraint2->expects($this->never())->method('checkToken');
+
+        return [$constraint, $constraint1, $constraint2];
     }
 }

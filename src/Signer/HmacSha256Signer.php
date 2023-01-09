@@ -7,21 +7,13 @@ namespace Marvin255\Jwt\Signer;
 /**
  * Hmac sha 256 signer.
  */
-class HmacSha256Signer extends Hmac
+final class HmacSha256Signer extends Hmac
 {
     /**
      * {@inheritDoc}
      */
-    protected function getAlgHeader(): string
+    protected function getAlgorithm(): Algorithm
     {
         return Algorithm::HMAC_SHA_256;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPHPAlgName(): string
-    {
-        return 'sha256';
     }
 }

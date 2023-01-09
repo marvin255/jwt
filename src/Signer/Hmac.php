@@ -7,7 +7,7 @@ namespace Marvin255\Jwt\Signer;
 use Marvin255\Jwt\Helper\Base64;
 use Marvin255\Jwt\Jwt;
 use Marvin255\Jwt\JwtSigner;
-use Marvin255\Jwt\Token\JoseHeader;
+use Marvin255\Jwt\Token\JoseHeaderParams;
 
 /**
  * Abstract class for signers based on hmac.
@@ -16,7 +16,7 @@ use Marvin255\Jwt\Token\JoseHeader;
  */
 abstract class Hmac implements JwtSigner
 {
-    private Secret $secret;
+    private readonly Secret $secret;
 
     public function __construct(Secret $secret)
     {
@@ -24,25 +24,16 @@ abstract class Hmac implements JwtSigner
     }
 
     /**
-     * Returns name of algorithm for JOSE header.
-     *
-     * @return string
+     * Returns algorithm enum for JOSE header.
      */
-    abstract protected function getAlgHeader(): string;
-
-    /**
-     * Returns name of algorithm for JOSE header.
-     *
-     * @return string
-     */
-    abstract protected function getPHPAlgName(): string;
+    abstract protected function getAlgorithm(): Algorithm;
 
     /**
      * {@inheritDoc}
      */
     public function updateJoseParams(array $params): array
     {
-        $params[JoseHeader::ALG] = $this->getAlgHeader();
+        $params[JoseHeaderParams::ALG->value] = $this->getAlgorithm()->value;
 
         return $params;
     }
@@ -55,7 +46,7 @@ abstract class Hmac implements JwtSigner
         $data = Base64::arrayEncode($joseParams) . '.' . Base64::arrayEncode($claims);
 
         return hash_hmac(
-            $this->getPHPAlgName(),
+            $this->getAlgorithm()->getPhpAlgName(),
             $data,
             $this->secret->getSecret()
         );

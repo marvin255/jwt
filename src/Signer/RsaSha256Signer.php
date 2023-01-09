@@ -7,21 +7,13 @@ namespace Marvin255\Jwt\Signer;
 /**
  * RSA sha 256 signer.
  */
-class RsaSha256Signer extends Rsa
+final class RsaSha256Signer extends Rsa
 {
     /**
      * {@inheritDoc}
      */
-    protected function getAlgHeader(): string
+    protected function getAlgorithm(): Algorithm
     {
         return Algorithm::RSA_SHA_256;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPHPAlgName(): int
-    {
-        return \OPENSSL_ALGO_SHA256;
     }
 }

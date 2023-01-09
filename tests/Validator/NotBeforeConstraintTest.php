@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Marvin255\Jwt\Test\Validator;
 
 use Marvin255\Jwt\Test\BaseCase;
-use Marvin255\Jwt\Token\ClaimSet;
+use Marvin255\Jwt\Token\ClaimSetParams;
 use Marvin255\Jwt\Validator\NotBeforeConstraint;
 
 /**
@@ -13,16 +13,22 @@ use Marvin255\Jwt\Validator\NotBeforeConstraint;
  */
 class NotBeforeConstraintTest extends BaseCase
 {
+    public function testNegativeLeewayException(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new NotBeforeConstraint(-1);
+    }
+
     /**
      * @dataProvider checkTokenProvider
      */
-    public function testCheckToken(?int $timeAdd, int $leeway, bool $expected, string $message): void
+    public function testCheckToken(?int $timeAdd, int $leeway, bool $expected): void
     {
         $jose = [];
         $claims = [];
 
         if ($timeAdd !== null) {
-            $claims[ClaimSet::NBF] = time() + $timeAdd;
+            $claims[ClaimSetParams::NBF->value] = time() + $timeAdd;
         }
 
         $token = $this->getTokenMock($jose, $claims);
@@ -30,17 +36,18 @@ class NotBeforeConstraintTest extends BaseCase
         $constraint = new NotBeforeConstraint($leeway);
         $isChecked = $constraint->checkToken($token);
 
-        $this->assertSame($expected, $isChecked, $message);
+        $this->assertSame($expected, $isChecked);
     }
 
     public function checkTokenProvider(): array
     {
         return [
-            [-5, 0, true, 'Positive test without leeway.'],
-            [5, 7, true, 'Positive test with leeway.'],
-            [5, 0, false, 'Negative test without leeway.'],
-            [5, 3, false, 'Negative test with leeway.'],
-            [null, 3, true, 'Without nbf header.'],
+            'positive test without leeway' => [-5, 0, true],
+            'positive test with leeway' => [5, 7, true],
+            'negative test without leeway' => [5, 0, false],
+            'negative test with leeway' => [5, 3, false],
+            'without nbf header' => [null, 3, true],
+            'zero leeway' => [0, 0, true],
         ];
     }
 

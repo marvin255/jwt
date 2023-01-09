@@ -7,21 +7,13 @@ namespace Marvin255\Jwt\Signer;
 /**
  * RSA sha 384 signer.
  */
-class RsaSha384Signer extends Rsa
+final class RsaSha384Signer extends Rsa
 {
     /**
      * {@inheritDoc}
      */
-    protected function getAlgHeader(): string
+    protected function getAlgorithm(): Algorithm
     {
         return Algorithm::RSA_SHA_384;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPHPAlgName(): int
-    {
-        return \OPENSSL_ALGO_SHA384;
     }
 }

@@ -7,7 +7,8 @@ namespace Marvin255\Jwt\Test\Signer;
 use Marvin255\Jwt\Signer\HmacSha256Signer;
 use Marvin255\Jwt\Signer\Secret;
 use Marvin255\Jwt\Test\BaseCase;
-use Marvin255\Jwt\Token\JoseHeader;
+use Marvin255\Jwt\Token\JoseHeaderParams;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
@@ -17,8 +18,9 @@ class HmacSha256SignerTest extends BaseCase
     public function testUpdateJoseParams(): void
     {
         $jose = ['test' => 'test value'];
-        $awaitedJose = ['test' => 'test value', JoseHeader::ALG => 'HS256'];
+        $awaitedJose = ['test' => 'test value', JoseHeaderParams::ALG->value => 'HS256'];
 
+        /** @var MockObject&Secret */
         $secret = $this->getMockBuilder(Secret::class)->getMock();
 
         $signer = new HmacSha256Signer($secret);
@@ -34,6 +36,7 @@ class HmacSha256SignerTest extends BaseCase
         $awaitedSignature = '6318e5220a6413bcb3a1700edcf5ea095792515687920aaad762e1ac2ea241a2';
 
         $secretString = 'test secret';
+        /** @var MockObject&Secret */
         $secret = $this->getMockBuilder(Secret::class)->getMock();
         $secret->method('getSecret')->willReturn($secretString);
 
@@ -51,6 +54,7 @@ class HmacSha256SignerTest extends BaseCase
         $token = $this->getTokenMock($jose, $claims, $signature);
 
         $secretString = 'test secret';
+        /** @var MockObject&Secret */
         $secret = $this->getMockBuilder(Secret::class)->getMock();
         $secret->method('getSecret')->willReturn($secretString);
 
@@ -68,6 +72,7 @@ class HmacSha256SignerTest extends BaseCase
         $token = $this->getTokenMock($jose, $claims, $signature);
 
         $secretString = 'test secret';
+        /** @var MockObject&Secret */
         $secret = $this->getMockBuilder(Secret::class)->getMock();
         $secret->method('getSecret')->willReturn($secretString);
 

@@ -33,9 +33,29 @@ class SecretBaseTest extends BaseCase
         $this->assertSame(file_get_contents($filePath), $secretString);
     }
 
+    public function testGetSecretFromFileWithUtfPath(): void
+    {
+        $filePath = 'file://' . __DIR__ . '/_fixtures/SecretBaseTest_testGetSecretFromFile_утф.key';
+
+        $secret = new SecretBase($filePath);
+        $secretString = $secret->getSecret();
+
+        $this->assertSame(file_get_contents($filePath), $secretString);
+    }
+
     public function testGetSecretFromFileNotFound(): void
     {
         $filePath = 'file://' . __DIR__ . '/_fixtures/SecretFileTest.unexisted';
+
+        $secret = new SecretBase($filePath);
+
+        $this->expectException(SecretFileNotFoundException::class);
+        $secret->getSecret();
+    }
+
+    public function testGetSecretFromEmptyFile(): void
+    {
+        $filePath = 'file://' . __DIR__ . '/_fixtures/SecretBaseTest_testGetSecretFromEmptyFile.key';
 
         $secret = new SecretBase($filePath);
 

@@ -6,15 +6,19 @@ namespace Marvin255\Jwt\Helper;
 
 /**
  * Helper with base64 encode and decode methods.
+ *
+ * @internal
  */
-class Base64
+final class Base64
 {
+    private const MAX_JSON_DEPTH = 512;
+
+    private function __construct()
+    {
+    }
+
     /**
      * Encodes string as base64 url.
-     *
-     * @param string $data
-     *
-     * @return string
      */
     public static function urlEncode(string $data): string
     {
@@ -26,28 +30,16 @@ class Base64
 
     /**
      * Decodes string from base64 url.
-     *
-     * @param string $data
-     *
-     * @return string
      */
     public static function urlDecode(string $data): string
     {
-        $decoded = str_replace(
-            ['-', '_'],
-            ['+', '/'],
-            $data
-        );
+        $decoded = strtr($data, '-_', '+/');
 
         return base64_decode($decoded);
     }
 
     /**
      * Encodes array to base64 string.
-     *
-     * @param array $data
-     *
-     * @return string
      */
     public static function arrayEncode(array $data): string
     {
@@ -58,15 +50,14 @@ class Base64
 
     /**
      * Decodes array from base64 string.
-     *
-     * @param string $data
-     *
-     * @return array
      */
     public static function arrayDecode(string $data): array
     {
         $json = self::urlDecode($data);
 
-        return (array) json_decode($json, true, 512, \JSON_THROW_ON_ERROR);
+        /** @var array */
+        $result = json_decode($json, true, self::MAX_JSON_DEPTH, \JSON_THROW_ON_ERROR);
+
+        return $result;
     }
 }

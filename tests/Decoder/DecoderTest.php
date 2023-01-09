@@ -10,29 +10,21 @@ use Marvin255\Jwt\Helper\Base64;
 use Marvin255\Jwt\Jwt;
 use Marvin255\Jwt\JwtBuilder;
 use Marvin255\Jwt\Test\BaseCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
  */
 class DecoderTest extends BaseCase
 {
-    public function testDecodeHeader(): void
+    /**
+     * @dataProvider provideDecodeHeader
+     */
+    public function testDecodeHeader(string $tokenString, array $awaitedJose, array $awaitedClaims, string $awaitedSignature): void
     {
-        $awaitedJose = [
-            'alg' => 'HS256',
-            'typ' => 'JWT',
-        ];
-        $awaitedClaims = [
-            'sub' => '1234567890',
-            'name' => 'John Doe',
-            'iat' => 1516239022,
-        ];
-        $awaitedSignature = Base64::urlDecode('xGknUYTHzJEQ5YIp2cXaZpU4m0RPJtqBZHjowGQGMx8');
-        $tokenString = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
-            . '.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ'
-            . '.xGknUYTHzJEQ5YIp2cXaZpU4m0RPJtqBZHjowGQGMx8';
         $awaitedToken = $this->getMockBuilder(Jwt::class)->getMock();
 
+        /** @var MockObject&JwtBuilder */
         $builder = $this->getMockBuilder(JwtBuilder::class)->getMock();
         $builder->expects($this->once())
             ->method('setJoseParams')
@@ -66,8 +58,60 @@ class DecoderTest extends BaseCase
         $this->assertSame($awaitedToken, $token);
     }
 
+    public function provideDecodeHeader(): array
+    {
+        return [
+            'simple token' => [
+                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
+                    . '.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ'
+                    . '.xGknUYTHzJEQ5YIp2cXaZpU4m0RPJtqBZHjowGQGMx8',
+                [
+                    'alg' => 'HS256',
+                    'typ' => 'JWT',
+                ],
+                [
+                    'sub' => '1234567890',
+                    'name' => 'John Doe',
+                    'iat' => 1516239022,
+                ],
+                Base64::urlDecode('xGknUYTHzJEQ5YIp2cXaZpU4m0RPJtqBZHjowGQGMx8'),
+            ],
+            'token with leading ant tailing spaces' => [
+                '    Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
+                    . '.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ'
+                    . '.xGknUYTHzJEQ5YIp2cXaZpU4m0RPJtqBZHjowGQGMx8  ',
+                [
+                    'alg' => 'HS256',
+                    'typ' => 'JWT',
+                ],
+                [
+                    'sub' => '1234567890',
+                    'name' => 'John Doe',
+                    'iat' => 1516239022,
+                ],
+                Base64::urlDecode('xGknUYTHzJEQ5YIp2cXaZpU4m0RPJtqBZHjowGQGMx8'),
+            ],
+            'token with another case' => [
+                'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
+                    . '.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ'
+                    . '.xGknUYTHzJEQ5YIp2cXaZpU4m0RPJtqBZHjowGQGMx8',
+                [
+                    'alg' => 'HS256',
+                    'typ' => 'JWT',
+                ],
+                [
+                    'sub' => '1234567890',
+                    'name' => 'John Doe',
+                    'iat' => 1516239022,
+                ],
+                Base64::urlDecode('xGknUYTHzJEQ5YIp2cXaZpU4m0RPJtqBZHjowGQGMx8'),
+            ],
+        ];
+    }
+
     public function testDecodeHeaderWrongHeaderException(): void
     {
+        /** @var MockObject&JwtBuilder */
         $builder = $this->getMockBuilder(JwtBuilder::class)->getMock();
 
         $decoder = new Decoder($builder);
@@ -78,16 +122,18 @@ class DecoderTest extends BaseCase
 
     public function testIncompleteTokenException(): void
     {
+        /** @var MockObject&JwtBuilder */
         $builder = $this->getMockBuilder(JwtBuilder::class)->getMock();
 
         $decoder = new Decoder($builder);
 
-        $this->expectException(JwtException::class);
+        $this->expectExceptionObject(new JwtException('Token string must contain 3 parts'));
         $decoder->decodeString('test');
     }
 
     public function testBadJsonException(): void
     {
+        /** @var MockObject&JwtBuilder */
         $builder = $this->getMockBuilder(JwtBuilder::class)->getMock();
 
         $decoder = new Decoder($builder);

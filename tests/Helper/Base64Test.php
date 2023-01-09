@@ -12,43 +12,79 @@ use Marvin255\Jwt\Test\BaseCase;
  */
 class Base64Test extends BaseCase
 {
-    public function testUrlEncode(): void
+    /**
+     * @dataProvider provideUrlEncodeDecode
+     */
+    public function testUrlEncode(string $result, string $data): void
     {
-        $data = 'test data';
-        $awaitedData = 'dGVzdCBkYXRh';
-
-        $encodedData = Base64::urlEncode($data);
-
-        $this->assertSame($awaitedData, $encodedData);
+        $this->assertSame($result, Base64::urlEncode($data));
     }
 
-    public function testUrlDecode(): void
+    /**
+     * @dataProvider provideUrlEncodeDecode
+     */
+    public function testUrlDecode(string $data, string $result): void
     {
-        $data = 'dGVzdCBkYXRh';
-        $awaitedData = 'test data';
-
-        $encodedData = Base64::urlDecode($data);
-
-        $this->assertSame($awaitedData, $encodedData);
+        $this->assertSame($result, Base64::urlDecode($data));
     }
 
-    public function testArrayEncode(): void
+    public function provideUrlEncodeDecode(): array
     {
-        $data = ['test' => 'test value', 'test_2' => 'test value 2'];
-        $awaitedData = 'eyJ0ZXN0IjoidGVzdCB2YWx1ZSIsInRlc3RfMiI6InRlc3QgdmFsdWUgMiJ9';
-
-        $encodedData = Base64::arrayEncode($data);
-
-        $this->assertSame($awaitedData, $encodedData);
+        return [
+            'simple case' => [
+                'dGVzdCBkYXRh',
+                'test data',
+            ],
+            'empty string' => [
+                '',
+                '',
+            ],
+            'string with new line' => [
+                'Tm93IGlzIHRoZSB0aW1lIGZvciBhbGwgZ29vZCBjb2RlcnMKdG8gbGVhcm4gcGhw',
+                "Now is the time for all good coders\nto learn php",
+            ],
+            'underscore symbol' => [
+                '_____w',
+                "\xff\xff\xff\xff",
+            ],
+            'minus symbol' => [
+                '-w',
+                "\xfb",
+            ],
+        ];
     }
 
-    public function testArrayDencode(): void
+    /**
+     * @dataProvider provideArrayEncodeDecode
+     */
+    public function testArrayEncode(string $result, array $data): void
     {
-        $data = 'eyJ0ZXN0IjoidGVzdCB2YWx1ZSIsInRlc3RfMiI6InRlc3QgdmFsdWUgMiJ9';
-        $awaitedData = ['test' => 'test value', 'test_2' => 'test value 2'];
+        $this->assertSame($result, Base64::arrayEncode($data));
+    }
 
-        $encodedData = Base64::arrayDecode($data);
+    /**
+     * @dataProvider provideArrayEncodeDecode
+     */
+    public function testArrayDecode(string $data, array $result): void
+    {
+        $this->assertSame($result, Base64::arrayDecode($data));
+    }
 
-        $this->assertSame($awaitedData, $encodedData);
+    public function provideArrayEncodeDecode(): array
+    {
+        return [
+            'simple array' => [
+                'eyJ0ZXN0IjoidGVzdCB2YWx1ZSIsInRlc3RfMiI6InRlc3QgdmFsdWUgMiJ9',
+                ['test' => 'test value', 'test_2' => 'test value 2'],
+            ],
+            'array with utf' => [
+                'eyLQv9Cw0YDQsNC80LXRgtGAMSI6ItC30L3QsNGH0LXQvdC40LUxIiwi0L_QsNGA0LDQvNC10YLRgDIiOiLQt9C90LDRh9C10L3QuNC1MiJ9',
+                ['параметр1' => 'значение1', 'параметр2' => 'значение2'],
+            ],
+            'array with slashes' => [
+                'eyIvIjoiLyIsIlxcIjoiXFwifQ',
+                ['/' => '/', '\\' => '\\'],
+            ],
+        ];
     }
 }

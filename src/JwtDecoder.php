@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Marvin255\Jwt;
 
 use Marvin255\Jwt\Exception\JwtException;
-use Marvin255\Jwt\Token\Token;
 
 /**
  * Interface for builder object that can decode token from string.
@@ -15,20 +14,12 @@ interface JwtDecoder
     /**
      * Decodes token object from string.
      *
-     * @param string $tokenString
-     *
-     * @return Jwt
-     *
      * @throws JwtException
      */
     public function decodeString(string $tokenString): Jwt;
 
     /**
      * Decodes token object from HTTP header.
-     *
-     * @param string $httpHeader
-     *
-     * @return Jwt
      *
      * @throws JwtException
      */

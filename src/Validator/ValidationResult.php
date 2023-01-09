@@ -7,17 +7,16 @@ namespace Marvin255\Jwt\Validator;
 /**
  * Object with response from validator.
  */
-class ValidationResult
+final class ValidationResult
 {
-    private bool $isValid;
+    private readonly bool $isValid;
 
     /**
      * @var string[]
      */
-    private array $errors;
+    private readonly array $errors;
 
     /**
-     * @param bool     $isValid
      * @param string[] $errors
      */
     public function __construct(bool $isValid, array $errors = [])
@@ -28,8 +27,6 @@ class ValidationResult
 
     /**
      * Returns true if token is valid.
-     *
-     * @return bool
      */
     public function isValid(): bool
     {

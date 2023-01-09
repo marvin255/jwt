@@ -10,9 +10,9 @@ use Marvin255\Jwt\JwtSigner;
 /**
  * Constraint that checks that token hav valid signature.
  */
-class SignatureConstraint implements Constraint
+final class SignatureConstraint implements Constraint
 {
-    private JwtSigner $signer;
+    private readonly JwtSigner $signer;
 
     public function __construct(JwtSigner $signer)
     {

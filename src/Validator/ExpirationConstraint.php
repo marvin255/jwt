@@ -9,12 +9,18 @@ use Marvin255\Jwt\Jwt;
 /**
  * Constraint that checks that token is not expired.
  */
-class ExpirationConstraint implements Constraint
+final class ExpirationConstraint implements Constraint
 {
-    private int $leeway;
+    public const DEFAULT_LEEWAY = 0;
 
-    public function __construct(int $leeway = 0)
+    private readonly int $leeway;
+
+    public function __construct(int $leeway = self::DEFAULT_LEEWAY)
     {
+        if ($leeway < 0) {
+            throw new \InvalidArgumentException("Leeway can't be negative");
+        }
+
         $this->leeway = $leeway;
     }
 
@@ -23,13 +29,13 @@ class ExpirationConstraint implements Constraint
      */
     public function checkToken(Jwt $token): bool
     {
-        $expHeader = $token->claims()->getExp();
+        $expHeader = $token->claims()->exp();
 
-        if ($expHeader === null) {
+        if (!$expHeader->isPresent()) {
             return true;
         }
 
-        return $expHeader >= (time() - $this->leeway);
+        return $expHeader->get() >= (time() - $this->leeway);
     }
 
     /**

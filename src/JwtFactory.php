@@ -12,7 +12,7 @@ use Marvin255\Jwt\Validator\Validator;
 /**
  * Factory object for JWT.
  */
-class JwtFactory
+final class JwtFactory
 {
     private static ?JwtDecoder $decoder = null;
 
@@ -20,10 +20,12 @@ class JwtFactory
 
     private static ?JwtValidator $validator = null;
 
+    private function __construct()
+    {
+    }
+
     /**
      * Creates and returns decoder object.
-     *
-     * @return JwtDecoder
      */
     public static function decoder(): JwtDecoder
     {
@@ -36,8 +38,6 @@ class JwtFactory
 
     /**
      * Creates and returns encoder object.
-     *
-     * @return JwtEncoder
      */
     public static function encoder(): JwtEncoder
     {
@@ -50,8 +50,6 @@ class JwtFactory
 
     /**
      * Creates and returns encoder object.
-     *
-     * @return JwtValidator
      */
     public static function validator(): JwtValidator
     {
@@ -64,8 +62,6 @@ class JwtFactory
 
     /**
      * Creates and returns builder object.
-     *
-     * @return JwtBuilder
      */
     public static function builder(): JwtBuilder
     {

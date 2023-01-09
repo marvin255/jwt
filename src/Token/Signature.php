@@ -7,13 +7,10 @@ namespace Marvin255\Jwt\Token;
 /**
  * Object that represents jwt signature.
  */
-class Signature
+final class Signature
 {
-    private string $signature;
+    private readonly string $signature;
 
-    /**
-     * @param string $signature
-     */
     public function __construct(string $signature = '')
     {
         $this->signature = $signature;
@@ -21,8 +18,6 @@ class Signature
 
     /**
      * Returns signature string.
-     *
-     * @return string
      */
     public function getSignatureString(): string
     {

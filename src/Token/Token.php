@@ -9,13 +9,13 @@ use Marvin255\Jwt\Jwt;
 /**
  * Basic token object.
  */
-class Token implements Jwt
+final class Token implements Jwt
 {
-    private JoseHeader $jose;
+    private readonly JoseHeader $jose;
 
-    private ClaimSet $claims;
+    private readonly ClaimSet $claims;
 
-    private Signature $signature;
+    private readonly Signature $signature;
 
     public function __construct(JoseHeader $jose, ClaimSet $claims, Signature $signature)
     {

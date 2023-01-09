@@ -61,12 +61,12 @@ if ($res->isValid()) {
 
 ```php
 // jose params
-$alg = $token->jose()->getAlg();                      // registered JOSE params have own getters
-$customParam = $token->jose()->get('custom_jose');    // any custom JOSE param from the payload
+$alg = $token->jose()->alg()->get();                           // registered JOSE params have own getters
+$customParam = $token->jose()->param('custom_jose')->get();    // any custom JOSE param from the payload
 
 // claims
-$iss = $token->claims()->getIss();                    // registered claims have own getters
-$customClaim = $token->claims()->get('custom_claim'); // any custom claim from the payload
+$iss = $token->claims()->iss()->get();                         // registered claims have own getters
+$customClaim = $token->claims()->param('custom_claim')->get(); // any custom claim from the payload
 ```
 
 
