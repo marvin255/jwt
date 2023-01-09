@@ -39,7 +39,7 @@ enum Algorithm: string
             Algorithm::RSA_SHA_256 => RsaSha256Signer::class,
             Algorithm::RSA_SHA_384 => RsaSha384Signer::class,
             Algorithm::RSA_SHA_512 => RsaSha512Signer::class,
-            default => '',
+            Algorithm::NONE => NoneSigner::class,
         };
     }
 

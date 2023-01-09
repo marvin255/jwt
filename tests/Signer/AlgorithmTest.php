@@ -9,6 +9,7 @@ use Marvin255\Jwt\Signer\AlgorithmType;
 use Marvin255\Jwt\Signer\HmacSha256Signer;
 use Marvin255\Jwt\Signer\HmacSha384Signer;
 use Marvin255\Jwt\Signer\HmacSha512Signer;
+use Marvin255\Jwt\Signer\NoneSigner;
 use Marvin255\Jwt\Signer\RsaSha256Signer;
 use Marvin255\Jwt\Signer\RsaSha384Signer;
 use Marvin255\Jwt\Signer\RsaSha512Signer;
@@ -52,9 +53,9 @@ class AlgorithmTest extends BaseCase
     public function provideGetImplementation(): array
     {
         return [
-            'default' => [
+            'NONE' => [
                 Algorithm::NONE,
-                '',
+                NoneSigner::class,
             ],
             'HMAC_SHA_256' => [
                 Algorithm::HMAC_SHA_256,
