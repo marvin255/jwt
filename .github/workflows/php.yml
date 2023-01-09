@@ -39,3 +39,5 @@ jobs:
       run: composer run-script test
     - name: Run linters
       run: composer run-script linter
+    - name: Run infection
+      run: composer run-script infection
