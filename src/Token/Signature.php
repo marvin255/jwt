@@ -9,11 +9,8 @@ namespace Marvin255\Jwt\Token;
  */
 final class Signature
 {
-    private readonly string $signature;
-
-    public function __construct(string $signature = '')
+    public function __construct(private readonly string $signature = '')
     {
-        $this->signature = $signature;
     }
 
     /**

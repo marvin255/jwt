@@ -11,11 +11,8 @@ use Marvin255\Jwt\Jwt;
  */
 final class AudienceConstraint implements Constraint
 {
-    private readonly string $awaitedAudience;
-
-    public function __construct(string $awaitedAudience)
+    public function __construct(private readonly string $awaitedAudience)
     {
-        $this->awaitedAudience = $awaitedAudience;
     }
 
     /**

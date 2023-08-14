@@ -12,11 +12,8 @@ use Marvin255\Jwt\JwtSigner;
  */
 final class SignatureConstraint implements Constraint
 {
-    private readonly JwtSigner $signer;
-
-    public function __construct(JwtSigner $signer)
+    public function __construct(private readonly JwtSigner $signer)
     {
-        $this->signer = $signer;
     }
 
     /**

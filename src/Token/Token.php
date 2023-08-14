@@ -11,17 +11,11 @@ use Marvin255\Jwt\Jwt;
  */
 final class Token implements Jwt
 {
-    private readonly JoseHeader $jose;
-
-    private readonly ClaimSet $claims;
-
-    private readonly Signature $signature;
-
-    public function __construct(JoseHeader $jose, ClaimSet $claims, Signature $signature)
-    {
-        $this->jose = $jose;
-        $this->claims = $claims;
-        $this->signature = $signature;
+    public function __construct(
+        private readonly JoseHeader $jose,
+        private readonly ClaimSet $claims,
+        private readonly Signature $signature
+    ) {
     }
 
     /**
