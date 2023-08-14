@@ -13,15 +13,11 @@ final class ExpirationConstraint implements Constraint
 {
     public const DEFAULT_LEEWAY = 0;
 
-    private readonly int $leeway;
-
-    public function __construct(int $leeway = self::DEFAULT_LEEWAY)
+    public function __construct(private readonly int $leeway = self::DEFAULT_LEEWAY)
     {
         if ($leeway < 0) {
             throw new \InvalidArgumentException("Leeway can't be negative");
         }
-
-        $this->leeway = $leeway;
     }
 
     /**

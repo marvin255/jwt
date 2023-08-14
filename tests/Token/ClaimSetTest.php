@@ -32,7 +32,7 @@ class ClaimSetTest extends BaseCase
         $this->assertSame($result, $testResult);
     }
 
-    public function provideClaimSetGetter(): array
+    public static function provideClaimSetGetter(): array
     {
         $valueString = 'test';
         $valueInt = 123;
@@ -137,7 +137,7 @@ class ClaimSetTest extends BaseCase
         $this->assertSame($result, $testResult);
     }
 
-    public function provideParam(): array
+    public static function provideParam(): array
     {
         $name = 'param_name';
         $value = 'param_value';
@@ -167,6 +167,7 @@ class ClaimSetTest extends BaseCase
             'param1' => 'value1',
             'param2' => 'value2',
             'param3' => null,
+            4 => 'value4',
         ];
         $resultSet = [
             'param1' => 'value1',

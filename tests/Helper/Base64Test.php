@@ -28,7 +28,7 @@ class Base64Test extends BaseCase
         $this->assertSame($result, Base64::urlDecode($data));
     }
 
-    public function provideUrlEncodeDecode(): array
+    public static function provideUrlEncodeDecode(): array
     {
         return [
             'simple case' => [
@@ -70,7 +70,7 @@ class Base64Test extends BaseCase
         $this->assertSame($result, Base64::arrayDecode($data));
     }
 
-    public function provideArrayEncodeDecode(): array
+    public static function provideArrayEncodeDecode(): array
     {
         return [
             'simple array' => [

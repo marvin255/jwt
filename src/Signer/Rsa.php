@@ -17,14 +17,10 @@ use Marvin255\Jwt\Token\JoseHeaderParams;
  */
 abstract class Rsa implements JwtSigner
 {
-    private readonly ?Secret $public;
-
-    private readonly ?Secret $private;
-
-    public function __construct(?Secret $public = null, ?Secret $private = null)
-    {
-        $this->public = $public;
-        $this->private = $private;
+    final public function __construct(
+        private readonly ?Secret $public = null,
+        private readonly ?Secret $private = null
+    ) {
     }
 
     /**

@@ -15,11 +15,8 @@ use Marvin255\Jwt\JwtDecoder;
  */
 final class Decoder implements JwtDecoder
 {
-    private readonly JwtBuilder $builder;
-
-    public function __construct(JwtBuilder $builder)
+    public function __construct(private readonly JwtBuilder $builder)
     {
-        $this->builder = $builder;
     }
 
     /**

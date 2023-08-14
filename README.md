@@ -30,15 +30,16 @@ $token = JwtFactory::decoder()->decodeHeader($_SERVER['HTTP_AUTHORIZE']);
 
 ```php
 use Marvin255\Jwt\JwtFactory;
-use Marvin255\Jwt\Signer\SecretBase;
-use Marvin255\Jwt\Signer\RsaSha512Signer;
+use Marvin255\Jwt\JwtSecretFactory;
+use Marvin255\Jwt\JwtSignerFactory;
+use Marvin255\Jwt\Signer\Algorithm;
 use Marvin255\Jwt\Validator\ExpirationConstraint;
 use Marvin255\Jwt\Validator\NotBeforeConstraint;
 use Marvin255\Jwt\Validator\AudienceConstraint;
 use Marvin255\Jwt\Validator\SignatureConstraint;
 
-$publicKey = new SecretBase('file:///path/to/public.key');
-$signer = new RsaSha512Signer($publicKey);
+$publicKey = JwtSecretFactory::create('file:///path/to/public.key');
+$signer = JwtSignerFactory::createRsa(Algorithm::RSA_SHA_512, $publicKey);
 
 $constraints = [
     new ExpirationConstraint(3),          // checks that token is not expired with 3s leeway
@@ -75,11 +76,12 @@ $customClaim = $token->claims()->param('custom_claim')->get(); // any custom cla
 
 ```php
 use Marvin255\Jwt\JwtFactory;
-use Marvin255\Jwt\Signer\SecretBase;
-use Marvin255\Jwt\Signer\RsaSha512Signer;
+use Marvin255\Jwt\JwtSecretFactory;
+use Marvin255\Jwt\JwtSignerFactory;
+use Marvin255\Jwt\Signer\Algorithm;
 
-$privateKey = new SecretBase('file:///path/to/private.key');
-$signer = new RsaSha512Signer(null, $privateKey);
+$privateKey = JwtSecretFactory::create('file:///path/to/private.key');
+$signer = JwtSignerFactory::createRsa(Algorithm::RSA_SHA_512, null, $privateKey);
 
 $token = JwtFactory::builder()
     ->setJoseParam('test', 'test') // any custom JOSE param

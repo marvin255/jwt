@@ -6,6 +6,8 @@ namespace Marvin255\Jwt\Signer;
 
 /**
  * Hmac sha 384 signer.
+ *
+ * @internal
  */
 final class HmacSha384Signer extends Hmac
 {

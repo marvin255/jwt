@@ -33,7 +33,7 @@ class AudienceConstraintTest extends BaseCase
         $this->assertSame($expected, $isChecked, $message);
     }
 
-    public function checkTokenProvider(): array
+    public static function checkTokenProvider(): array
     {
         return [
             [['qwe', 'asd', 'zxc'], 'asd', true, 'Positive test with array.'],

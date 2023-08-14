@@ -11,6 +11,9 @@ use Marvin255\Jwt\Token\Signature;
 use Marvin255\Jwt\Token\Token;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 abstract class BaseCase extends TestCase
 {
     protected function getJoseHeaderMock(array $paramsSet = []): JoseHeader

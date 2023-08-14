@@ -10,6 +10,8 @@ use Marvin255\Jwt\Token\JoseHeaderParams;
 
 /**
  * Signer for non signed tokens.
+ *
+ * @internal
  */
 final class NoneSigner implements JwtSigner
 {

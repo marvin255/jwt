@@ -9,20 +9,11 @@ namespace Marvin255\Jwt\Validator;
  */
 final class ValidationResult
 {
-    private readonly bool $isValid;
-
-    /**
-     * @var string[]
-     */
-    private readonly array $errors;
-
-    /**
-     * @param string[] $errors
-     */
-    public function __construct(bool $isValid, array $errors = [])
-    {
-        $this->isValid = $isValid;
-        $this->errors = $errors;
+    public function __construct(
+        private readonly bool $isValid,
+        /** @var string[] */
+        private readonly array $errors = []
+    ) {
     }
 
     /**

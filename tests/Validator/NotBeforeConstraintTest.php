@@ -39,7 +39,7 @@ class NotBeforeConstraintTest extends BaseCase
         $this->assertSame($expected, $isChecked);
     }
 
-    public function checkTokenProvider(): array
+    public static function checkTokenProvider(): array
     {
         return [
             'positive test without leeway' => [-5, 0, true],

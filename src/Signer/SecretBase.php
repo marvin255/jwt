@@ -8,19 +8,17 @@ use Marvin255\Jwt\Exception\SecretFileNotFoundException;
 
 /**
  * Object that stores secret keys for signer.
+ *
+ * @internal
  */
 final class SecretBase implements Secret
 {
     private const FILE_PREFIX = 'file://';
 
-    private readonly string $secret;
-
-    private readonly ?string $passPhrase;
-
-    public function __construct(string $secret, ?string $passPhrase = null)
-    {
-        $this->secret = $secret;
-        $this->passPhrase = $passPhrase;
+    public function __construct(
+        private readonly string $secret,
+        private readonly ?string $passPhrase = null
+    ) {
     }
 
     /**

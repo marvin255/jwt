@@ -32,7 +32,7 @@ class JoseHeaderTest extends BaseCase
         $this->assertSame($result, $testResult);
     }
 
-    public function provideJoseGetter(): array
+    public static function provideJoseGetter(): array
     {
         $value = 'test';
 
@@ -176,7 +176,7 @@ class JoseHeaderTest extends BaseCase
         $this->assertSame($result, $testResult);
     }
 
-    public function provideParam(): array
+    public static function provideParam(): array
     {
         $name = 'param_name';
         $value = 'param_value';
@@ -206,6 +206,7 @@ class JoseHeaderTest extends BaseCase
             'param1' => 'value1',
             'param2' => 'value2',
             'param3' => null,
+            4 => 'value4',
         ];
         $resultSet = [
             'param1' => 'value1',
