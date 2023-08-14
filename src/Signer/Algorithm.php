@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Marvin255\Jwt\Signer;
 
+use Marvin255\Jwt\JwtSigner;
+
 /**
  * Enum for algorithms names.
  */
@@ -30,6 +32,9 @@ enum Algorithm: string
         };
     }
 
+    /**
+     * @psalm-return class-string<JwtSigner>
+     */
     public function getImplementation(): string
     {
         return match ($this) {
