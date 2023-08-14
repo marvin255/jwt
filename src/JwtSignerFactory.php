@@ -23,7 +23,7 @@ final class JwtSignerFactory
     /**
      * Creates RSA signer.
      */
-    public static function createRsa(Algorithm $algorithm, Secret $public = null, Secret $private = null): Rsa
+    public static function createRsa(Algorithm $algorithm, Secret $public = null, Secret $private = null): JwtSigner
     {
         $implementation = $algorithm->getImplementation();
         if (!is_subclass_of($implementation, Rsa::class)) {
@@ -36,7 +36,7 @@ final class JwtSignerFactory
     /**
      * Creates HMAC signer.
      */
-    public static function createHmac(Algorithm $algorithm, Secret $secret): Hmac
+    public static function createHmac(Algorithm $algorithm, Secret $secret): JwtSigner
     {
         $implementation = $algorithm->getImplementation();
         if (!is_subclass_of($implementation, Hmac::class)) {
@@ -49,7 +49,7 @@ final class JwtSignerFactory
     /**
      * Creates empty signer that does nothing.
      */
-    public static function createNone(): NoneSigner
+    public static function createNone(): JwtSigner
     {
         return new NoneSigner();
     }
