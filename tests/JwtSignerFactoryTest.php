@@ -8,6 +8,7 @@ use Marvin255\Jwt\Exception\SignerAlgorithmNotFoundException;
 use Marvin255\Jwt\JwtSignerFactory;
 use Marvin255\Jwt\Signer\Algorithm;
 use Marvin255\Jwt\Signer\Hmac;
+use Marvin255\Jwt\Signer\NoneSigner;
 use Marvin255\Jwt\Signer\Rsa;
 use Marvin255\Jwt\Signer\Secret;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -53,6 +54,13 @@ class JwtSignerFactoryTest extends BaseCase
 
         $this->expectExceptionObject($exception);
         JwtSignerFactory::createHmac(Algorithm::RSA_SHA_256, $secret);
+    }
+
+    public function testCreateNone(): void
+    {
+        $res = JwtSignerFactory::createNone();
+
+        $this->assertInstanceOf(NoneSigner::class, $res);
     }
 
     /**
