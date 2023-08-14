@@ -167,6 +167,7 @@ class ClaimSetTest extends BaseCase
             'param1' => 'value1',
             'param2' => 'value2',
             'param3' => null,
+            4 => 'value4',
         ];
         $resultSet = [
             'param1' => 'value1',

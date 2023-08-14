@@ -9,11 +9,6 @@
         "text": "infection.log"
     },
     "mutators": {
-        "@default": true,
-        "CastString": {
-            "ignore": [
-                "Marvin255\\Jwt\\Token\\ParamSet::__construct"
-            ]
-        }
+        "@default": true
     }
 }

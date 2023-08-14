@@ -22,8 +22,8 @@ abstract class ParamSet
     {
         $setParams = [];
         foreach ($params as $paramName => $paramValue) {
-            if ($paramValue !== null) {
-                $setParams[(string) $paramName] = $paramValue;
+            if ($paramValue !== null && \is_string($paramName)) {
+                $setParams[$paramName] = $paramValue;
             }
         }
         $this->params = $setParams;
