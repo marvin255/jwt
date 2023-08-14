@@ -58,7 +58,7 @@ class DecoderTest extends BaseCase
         $this->assertSame($awaitedToken, $token);
     }
 
-    public function provideDecodeHeader(): array
+    public static function provideDecodeHeader(): array
     {
         return [
             'simple token' => [

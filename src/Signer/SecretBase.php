@@ -17,7 +17,7 @@ final class SecretBase implements Secret
 
     private readonly ?string $passPhrase;
 
-    public function __construct(string $secret, ?string $passPhrase = null)
+    public function __construct(string $secret, string $passPhrase = null)
     {
         $this->secret = $secret;
         $this->passPhrase = $passPhrase;

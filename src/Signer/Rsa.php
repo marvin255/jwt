@@ -21,7 +21,7 @@ abstract class Rsa implements JwtSigner
 
     private readonly ?Secret $private;
 
-    public function __construct(?Secret $public = null, ?Secret $private = null)
+    public function __construct(Secret $public = null, Secret $private = null)
     {
         $this->public = $public;
         $this->private = $private;

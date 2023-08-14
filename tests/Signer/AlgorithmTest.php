@@ -28,7 +28,7 @@ class AlgorithmTest extends BaseCase
         $this->assertSame($result, $alg->getPhpAlgName());
     }
 
-    public function provideGetPhpAlgName(): array
+    public static function provideGetPhpAlgName(): array
     {
         return [
             'default' => [
@@ -50,7 +50,7 @@ class AlgorithmTest extends BaseCase
         $this->assertSame($result, $alg->getImplementation());
     }
 
-    public function provideGetImplementation(): array
+    public static function provideGetImplementation(): array
     {
         return [
             'NONE' => [
@@ -92,7 +92,7 @@ class AlgorithmTest extends BaseCase
         $this->assertSame($result, $alg->getType());
     }
 
-    public function provideTestGetType(): array
+    public static function provideTestGetType(): array
     {
         return [
             'NONE' => [
