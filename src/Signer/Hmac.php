@@ -16,7 +16,7 @@ use Marvin255\Jwt\Token\JoseHeaderParams;
  */
 abstract class Hmac implements JwtSigner
 {
-    public function __construct(private readonly Secret $secret)
+    final public function __construct(private readonly Secret $secret)
     {
     }
 

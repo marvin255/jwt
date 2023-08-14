@@ -6,6 +6,7 @@ namespace Marvin255\Jwt;
 
 use Marvin255\Jwt\Exception\SignerAlgorithmNotFoundException;
 use Marvin255\Jwt\Signer\Algorithm;
+use Marvin255\Jwt\Signer\Hmac;
 use Marvin255\Jwt\Signer\Rsa;
 use Marvin255\Jwt\Signer\Secret;
 
@@ -29,5 +30,18 @@ final class JwtSignerFactory
         }
 
         return new $implementation($public, $private);
+    }
+
+    /**
+     * Creates HMAC signer.
+     */
+    public static function createHmac(Algorithm $algorithm, Secret $secret): Hmac
+    {
+        $implementation = $algorithm->getImplementation();
+        if (!is_subclass_of($implementation, Hmac::class)) {
+            throw new SignerAlgorithmNotFoundException('Wrong algorithm provided');
+        }
+
+        return new $implementation($secret);
     }
 }
