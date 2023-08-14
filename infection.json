@@ -10,11 +10,6 @@
     },
     "mutators": {
         "@default": true,
-        "LogicalOr": {
-            "ignore": [
-                "Marvin255\\Jwt\\Signer\\SecretBase::getSecret"
-            ]
-        },
         "CastString": {
             "ignore": [
                 "Marvin255\\Jwt\\Token\\ParamSet::__construct"
