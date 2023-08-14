@@ -30,14 +30,14 @@ $token = JwtFactory::decoder()->decodeHeader($_SERVER['HTTP_AUTHORIZE']);
 
 ```php
 use Marvin255\Jwt\JwtFactory;
-use Marvin255\Jwt\Signer\SecretBase;
+use Marvin255\Jwt\JwtSecretFactory;
 use Marvin255\Jwt\Signer\RsaSha512Signer;
 use Marvin255\Jwt\Validator\ExpirationConstraint;
 use Marvin255\Jwt\Validator\NotBeforeConstraint;
 use Marvin255\Jwt\Validator\AudienceConstraint;
 use Marvin255\Jwt\Validator\SignatureConstraint;
 
-$publicKey = new SecretBase('file:///path/to/public.key');
+$publicKey = JwtSecretFactory::create('file:///path/to/public.key');
 $signer = new RsaSha512Signer($publicKey);
 
 $constraints = [
@@ -75,10 +75,10 @@ $customClaim = $token->claims()->param('custom_claim')->get(); // any custom cla
 
 ```php
 use Marvin255\Jwt\JwtFactory;
-use Marvin255\Jwt\Signer\SecretBase;
+use Marvin255\Jwt\JwtSecretFactory;
 use Marvin255\Jwt\Signer\RsaSha512Signer;
 
-$privateKey = new SecretBase('file:///path/to/private.key');
+$privateKey = JwtSecretFactory::create('file:///path/to/private.key');
 $signer = new RsaSha512Signer(null, $privateKey);
 
 $token = JwtFactory::builder()
