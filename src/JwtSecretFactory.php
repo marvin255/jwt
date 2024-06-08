@@ -19,7 +19,7 @@ final class JwtSecretFactory
     /**
      * Creates object that contains key secret.
      */
-    public static function create(string $secret, string $passPhrase = null): Secret
+    public static function create(string $secret, ?string $passPhrase = null): Secret
     {
         return new SecretBase($secret, $passPhrase);
     }

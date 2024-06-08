@@ -33,7 +33,7 @@ final class Validator implements JwtValidator
     /**
      * {@inheritDoc}
      */
-    public function validate(Jwt $token, Constraint|array $constraints = null): ValidationResult
+    public function validate(Jwt $token, Constraint|array|null $constraints = null): ValidationResult
     {
         $constraintsForValidation = $this->defineConstraintsList($constraints);
 
