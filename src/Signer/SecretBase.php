@@ -38,7 +38,7 @@ final class SecretBase implements Secret
         }
 
         $secret = file_get_contents($filePath);
-        if (empty($secret)) {
+        if ($secret === '') {
             throw new SecretFileNotFoundException(sprintf('Secret file %s is empty', $this->secret));
         }
 

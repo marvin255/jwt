@@ -23,7 +23,7 @@ final class JwtSignerFactory
     /**
      * Creates RSA signer.
      */
-    public static function createRsa(Algorithm $algorithm, Secret $public = null, Secret $private = null): JwtSigner
+    public static function createRsa(Algorithm $algorithm, ?Secret $public = null, ?Secret $private = null): JwtSigner
     {
         $implementation = $algorithm->getImplementation();
         if (!is_subclass_of($implementation, Rsa::class)) {
