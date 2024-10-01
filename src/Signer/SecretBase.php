@@ -17,7 +17,7 @@ final class SecretBase implements Secret
 
     public function __construct(
         private readonly string $secret,
-        private readonly ?string $passPhrase = null
+        private readonly ?string $passPhrase = null,
     ) {
     }
 
@@ -34,12 +34,12 @@ final class SecretBase implements Secret
 
         $filePath = realpath(substr($this->secret, \strlen(self::FILE_PREFIX)));
         if ($filePath === false) {
-            throw new SecretFileNotFoundException(sprintf('Secret file %s not found or unreadable', $this->secret));
+            throw new SecretFileNotFoundException(\sprintf('Secret file %s not found or unreadable', $this->secret));
         }
 
         $secret = file_get_contents($filePath);
         if ($secret === '') {
-            throw new SecretFileNotFoundException(sprintf('Secret file %s is empty', $this->secret));
+            throw new SecretFileNotFoundException(\sprintf('Secret file %s is empty', $this->secret));
         }
 
         return $secret;

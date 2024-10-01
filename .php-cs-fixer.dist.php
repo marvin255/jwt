@@ -1,5 +1,8 @@
 <?php
 
+use PhpCsFixer\Config;
+use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
+
 $finder = PhpCsFixer\Finder::create()->in(__DIR__);
 
 $rules = [
@@ -21,7 +24,7 @@ $rules = [
     'non_printable_character' => true,
     'modernize_types_casting' => true,
     'ordered_interfaces' => [
-        'order' => 'alpha', 
+        'order' => 'alpha',
         'direction' => 'ascend',
     ],
     'date_time_immutable' => true,
@@ -29,9 +32,9 @@ $rules = [
     'combine_nested_dirname' => true,
     'native_function_invocation' => [
         'include' => [
-            '@compiler_optimized',
-        ], 
-        'scope' => 'namespaced', 
+            '@compiler_optimized'
+        ],
+        'scope' => 'namespaced',
         'strict' => true,
     ],
     'php_unit_construct' => true,
@@ -43,6 +46,7 @@ $rules = [
     'strict_comparison' => true,
 ];
 
-$config = new PhpCsFixer\Config();
-
-return $config->setRules($rules)->setFinder($finder);
+return (new Config())
+    ->setParallelConfig(ParallelConfigFactory::detect())
+    ->setRules($rules)
+    ->setFinder($finder);

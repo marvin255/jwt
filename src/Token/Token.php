@@ -14,7 +14,7 @@ final class Token implements Jwt
     public function __construct(
         private readonly JoseHeader $jose,
         private readonly ClaimSet $claims,
-        private readonly Signature $signature
+        private readonly Signature $signature,
     ) {
     }
 
