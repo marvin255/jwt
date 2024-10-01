@@ -23,7 +23,7 @@ final class Validator implements JwtValidator
         $constraints = [];
         foreach ($defaultConstraints as $defaultConstraint) {
             if (!($defaultConstraint instanceof Constraint)) {
-                throw new JwtException(sprintf("Constraint item must be instance of '%s'", Constraint::class));
+                throw new JwtException(\sprintf("Constraint item must be instance of '%s'", Constraint::class));
             }
             $constraints[] = $defaultConstraint;
         }

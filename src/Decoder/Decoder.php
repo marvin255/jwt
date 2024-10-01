@@ -47,7 +47,7 @@ final class Decoder implements JwtDecoder
     public function decodeHeader(string $httpHeader): Jwt
     {
         if (!preg_match('/Bearer\s(.+)/i', $httpHeader, $matches)) {
-            throw new JwtException(sprintf("Can't recognize jwt header in string: %s", $httpHeader));
+            throw new JwtException(\sprintf("Can't recognize jwt header in string: %s", $httpHeader));
         }
 
         return $this->decodeString($matches[1]);
@@ -82,7 +82,7 @@ final class Decoder implements JwtDecoder
             /** @var array<string, mixed> */
             $decoded = Base64::arrayDecode($part);
         } catch (\Throwable $e) {
-            throw new JwtException(sprintf("Can't decode token object: %s", $e->getMessage()));
+            throw new JwtException(\sprintf("Can't decode token object: %s", $e->getMessage()));
         }
 
         return $decoded;

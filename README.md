@@ -1,6 +1,6 @@
 # JWT
 
-[![Build Status](https://github.com/marvin255/jwt/workflows/marvin255_jwt/badge.svg)](https://github.com/marvin255/jwt/actions?query=workflow%3A%22marvin255_jwt%22)
+[![Build Status](https://github.com/marvin255/jwt/workflows/marvin255_jwt/badge)](https://github.com/marvin255/jwt/actions?query=workflow%3A%22marvin255_jwt%22)
 
 Simple [JWT](https://tools.ietf.org/html/rfc7519) implementation for PHP.
 

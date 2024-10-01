@@ -12,7 +12,7 @@ final class ValidationResult
     public function __construct(
         private readonly bool $isValid,
         /** @var string[] */
-        private readonly array $errors = []
+        private readonly array $errors = [],
     ) {
     }
 

@@ -19,7 +19,7 @@ abstract class Rsa implements JwtSigner
 {
     final public function __construct(
         private readonly ?Secret $public = null,
-        private readonly ?Secret $private = null
+        private readonly ?Secret $private = null,
     ) {
     }
 
