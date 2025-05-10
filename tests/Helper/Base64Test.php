@@ -10,7 +10,7 @@ use Marvin255\Jwt\Test\BaseCase;
 /**
  * @internal
  */
-class Base64Test extends BaseCase
+final class Base64Test extends BaseCase
 {
     /**
      * @dataProvider provideUrlEncodeDecode

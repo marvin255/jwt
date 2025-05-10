@@ -11,7 +11,7 @@ use Marvin255\Jwt\Token\JoseHeaderParams;
 /**
  * @internal
  */
-class NoneSignerTest extends BaseCase
+final class NoneSignerTest extends BaseCase
 {
     public function testUpdateJoseParams(): void
     {

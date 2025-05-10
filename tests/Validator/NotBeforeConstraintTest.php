@@ -11,7 +11,7 @@ use Marvin255\Jwt\Validator\NotBeforeConstraint;
 /**
  * @internal
  */
-class NotBeforeConstraintTest extends BaseCase
+final class NotBeforeConstraintTest extends BaseCase
 {
     public function testNegativeLeewayException(): void
     {

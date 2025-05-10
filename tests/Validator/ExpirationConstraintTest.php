@@ -11,7 +11,7 @@ use Marvin255\Jwt\Validator\ExpirationConstraint;
 /**
  * @internal
  */
-class ExpirationConstraintTest extends BaseCase
+final class ExpirationConstraintTest extends BaseCase
 {
     public function testNegativeLeewayException(): void
     {

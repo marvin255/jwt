@@ -12,7 +12,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * @internal
  */
-class BuilderTest extends BaseCase
+final class BuilderTest extends BaseCase
 {
     public function testSetJoseParam(): void
     {

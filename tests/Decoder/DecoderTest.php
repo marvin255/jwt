@@ -15,7 +15,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * @internal
  */
-class DecoderTest extends BaseCase
+final class DecoderTest extends BaseCase
 {
     /**
      * @dataProvider provideDecodeHeader

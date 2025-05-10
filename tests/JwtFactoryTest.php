@@ -13,7 +13,7 @@ use Marvin255\Jwt\JwtValidator;
 /**
  * @internal
  */
-class JwtFactoryTest extends BaseCase
+final class JwtFactoryTest extends BaseCase
 {
     public function testDecoder(): void
     {

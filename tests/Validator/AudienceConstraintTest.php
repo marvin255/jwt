@@ -11,7 +11,7 @@ use Marvin255\Jwt\Validator\AudienceConstraint;
 /**
  * @internal
  */
-class AudienceConstraintTest extends BaseCase
+final class AudienceConstraintTest extends BaseCase
 {
     /**
      * @dataProvider checkTokenProvider

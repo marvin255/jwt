@@ -12,7 +12,7 @@ use Marvin255\Optional\NoSuchElementException;
 /**
  * @internal
  */
-class ClaimSetTest extends BaseCase
+final class ClaimSetTest extends BaseCase
 {
     /**
      * @dataProvider provideClaimSetGetter

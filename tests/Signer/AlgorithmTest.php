@@ -18,7 +18,7 @@ use Marvin255\Jwt\Test\BaseCase;
 /**
  * @internal
  */
-class AlgorithmTest extends BaseCase
+final class AlgorithmTest extends BaseCase
 {
     /**
      * @dataProvider provideGetPhpAlgName

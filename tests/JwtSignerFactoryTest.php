@@ -16,7 +16,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * @internal
  */
-class JwtSignerFactoryTest extends BaseCase
+final class JwtSignerFactoryTest extends BaseCase
 {
     public function testCreateRsa(): void
     {

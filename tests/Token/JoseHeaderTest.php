@@ -12,7 +12,7 @@ use Marvin255\Optional\NoSuchElementException;
 /**
  * @internal
  */
-class JoseHeaderTest extends BaseCase
+final class JoseHeaderTest extends BaseCase
 {
     /**
      * @dataProvider provideJoseGetter
