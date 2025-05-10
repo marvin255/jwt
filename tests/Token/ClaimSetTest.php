@@ -15,10 +15,9 @@ use Marvin255\Optional\NoSuchElementException;
 final class ClaimSetTest extends BaseCase
 {
     /**
-     * @dataProvider provideClaimSetGetter
-     *
      * @psalm-suppress MixedMethodCall
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideClaimSetGetter')]
     public function testClaimSetGetter(array $set, string $getter, mixed $result): void
     {
         $claimSet = new ClaimSet($set);
@@ -121,9 +120,7 @@ final class ClaimSetTest extends BaseCase
         ];
     }
 
-    /**
-     * @dataProvider provideParam
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideParam')]
     public function testParam(array $set, string $name, mixed $result): void
     {
         $claimSet = new ClaimSet($set);

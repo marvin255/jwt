@@ -12,17 +12,13 @@ use Marvin255\Jwt\Test\BaseCase;
  */
 final class Base64Test extends BaseCase
 {
-    /**
-     * @dataProvider provideUrlEncodeDecode
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideUrlEncodeDecode')]
     public function testUrlEncode(string $result, string $data): void
     {
         $this->assertSame($result, Base64::urlEncode($data));
     }
 
-    /**
-     * @dataProvider provideUrlEncodeDecode
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideUrlEncodeDecode')]
     public function testUrlDecode(string $data, string $result): void
     {
         $this->assertSame($result, Base64::urlDecode($data));
@@ -54,17 +50,13 @@ final class Base64Test extends BaseCase
         ];
     }
 
-    /**
-     * @dataProvider provideArrayEncodeDecode
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideArrayEncodeDecode')]
     public function testArrayEncode(string $result, array $data): void
     {
         $this->assertSame($result, Base64::arrayEncode($data));
     }
 
-    /**
-     * @dataProvider provideArrayEncodeDecode
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideArrayEncodeDecode')]
     public function testArrayDecode(string $data, array $result): void
     {
         $this->assertSame($result, Base64::arrayDecode($data));

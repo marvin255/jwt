@@ -20,9 +20,7 @@ use Marvin255\Jwt\Test\BaseCase;
  */
 final class AlgorithmTest extends BaseCase
 {
-    /**
-     * @dataProvider provideGetPhpAlgName
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideGetPhpAlgName')]
     public function testGetPhpAlgName(Algorithm $alg, string $result): void
     {
         $this->assertSame($result, $alg->getPhpAlgName());
@@ -42,9 +40,7 @@ final class AlgorithmTest extends BaseCase
         ];
     }
 
-    /**
-     * @dataProvider provideGetImplementation
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideGetImplementation')]
     public function testGetImplementation(Algorithm $alg, string $result): void
     {
         $this->assertSame($result, $alg->getImplementation());
@@ -84,9 +80,7 @@ final class AlgorithmTest extends BaseCase
         ];
     }
 
-    /**
-     * @dataProvider provideTestGetType
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideTestGetType')]
     public function testGetType(Algorithm $alg, AlgorithmType $result): void
     {
         $this->assertSame($result, $alg->getType());

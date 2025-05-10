@@ -19,9 +19,7 @@ final class NotBeforeConstraintTest extends BaseCase
         new NotBeforeConstraint(-1);
     }
 
-    /**
-     * @dataProvider checkTokenProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('checkTokenProvider')]
     public function testCheckToken(?int $timeAdd, int $leeway, bool $expected): void
     {
         $jose = [];

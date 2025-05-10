@@ -15,10 +15,9 @@ use Marvin255\Optional\NoSuchElementException;
 final class JoseHeaderTest extends BaseCase
 {
     /**
-     * @dataProvider provideJoseGetter
-     *
      * @psalm-suppress MixedMethodCall
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideJoseGetter')]
     public function testJoseGetter(array $set, string $getter, mixed $result): void
     {
         $jose = new JoseHeader($set);
@@ -160,9 +159,7 @@ final class JoseHeaderTest extends BaseCase
         ];
     }
 
-    /**
-     * @dataProvider provideParam
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideParam')]
     public function testParam(array $set, string $name, mixed $result): void
     {
         $jose = new JoseHeader($set);

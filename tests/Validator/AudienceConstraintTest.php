@@ -13,9 +13,7 @@ use Marvin255\Jwt\Validator\AudienceConstraint;
  */
 final class AudienceConstraintTest extends BaseCase
 {
-    /**
-     * @dataProvider checkTokenProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('checkTokenProvider')]
     public function testCheckToken(mixed $tokenAudience, string $awaitedAudience, bool $expected, string $message): void
     {
         $jose = [];
