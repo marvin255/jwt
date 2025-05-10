@@ -14,6 +14,7 @@ final class HmacSha256Signer extends Hmac
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function getAlgorithm(): Algorithm
     {
         return Algorithm::HMAC_SHA_256;

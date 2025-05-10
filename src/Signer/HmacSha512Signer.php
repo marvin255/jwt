@@ -14,6 +14,7 @@ final class HmacSha512Signer extends Hmac
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function getAlgorithm(): Algorithm
     {
         return Algorithm::HMAC_SHA_512;

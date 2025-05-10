@@ -18,6 +18,7 @@ final class NoneSigner implements JwtSigner
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function updateJoseParams(array $params): array
     {
         $params[JoseHeaderParams::ALG->value] = Algorithm::NONE->value;
@@ -28,6 +29,7 @@ final class NoneSigner implements JwtSigner
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function createSignature(array $joseParams, array $claims): string
     {
         return '';
@@ -36,6 +38,7 @@ final class NoneSigner implements JwtSigner
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function verifyToken(Jwt $token): bool
     {
         return $token->signature()->getSignatureString() === '';

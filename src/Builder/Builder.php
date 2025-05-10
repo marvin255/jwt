@@ -35,6 +35,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setJoseParam(string $name, mixed $value): JwtBuilder
     {
         $this->jose[$name] = $value;
@@ -45,6 +46,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setJoseParams(array $params): JwtBuilder
     {
         foreach ($params as $name => $value) {
@@ -57,6 +59,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setClaim(string $name, mixed $value): JwtBuilder
     {
         $this->claims[$name] = $value;
@@ -67,6 +70,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setClaims(array $claims): JwtBuilder
     {
         foreach ($claims as $name => $value) {
@@ -79,6 +83,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setIss(string $iss): JwtBuilder
     {
         $this->claims[ClaimSetParams::ISS->value] = $iss;
@@ -89,6 +94,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setSub(string $sub): JwtBuilder
     {
         $this->claims[ClaimSetParams::SUB->value] = $sub;
@@ -99,6 +105,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setAud(mixed $aud): JwtBuilder
     {
         $this->claims[ClaimSetParams::AUD->value] = $aud;
@@ -109,6 +116,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setExp(int $exp): JwtBuilder
     {
         $this->claims[ClaimSetParams::EXP->value] = $exp;
@@ -119,6 +127,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setNbf(int $nbf): JwtBuilder
     {
         $this->claims[ClaimSetParams::NBF->value] = $nbf;
@@ -129,6 +138,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setIat(int $iat): JwtBuilder
     {
         $this->claims[ClaimSetParams::IAT->value] = $iat;
@@ -139,6 +149,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setJti(string $jti): JwtBuilder
     {
         $this->claims[ClaimSetParams::JTI->value] = $jti;
@@ -149,6 +160,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function setSignature(string $signature): JwtBuilder
     {
         $this->signature = $signature;
@@ -159,6 +171,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function signWith(JwtSigner $signer): JwtBuilder
     {
         $this->signer = $signer;
@@ -169,6 +182,7 @@ final class Builder implements JwtBuilder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function build(): Jwt
     {
         $jose = $this->jose;

@@ -19,6 +19,7 @@ final class SignatureConstraint implements Constraint
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function checkToken(Jwt $token): bool
     {
         return $this->signer->verifyToken($token);
@@ -27,6 +28,7 @@ final class SignatureConstraint implements Constraint
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function createErrorMessage(Jwt $token): string
     {
         return 'Token has invalid or malformed signature.';

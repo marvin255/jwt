@@ -26,6 +26,7 @@ final class SecretBase implements Secret
      *
      * @throws SecretFileNotFoundException
      */
+    #[\Override]
     public function getSecret(): string
     {
         if (!str_starts_with($this->secret, self::FILE_PREFIX)) {
@@ -48,6 +49,7 @@ final class SecretBase implements Secret
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function getPassPhrase(): ?string
     {
         return $this->passPhrase;

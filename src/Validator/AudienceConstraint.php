@@ -18,6 +18,7 @@ final class AudienceConstraint implements Constraint
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function checkToken(Jwt $token): bool
     {
         $audHeader = $token->claims()->aud();
@@ -38,6 +39,7 @@ final class AudienceConstraint implements Constraint
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function createErrorMessage(Jwt $token): string
     {
         return 'This token was issued for other recepient.';

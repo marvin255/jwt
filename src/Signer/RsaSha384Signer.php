@@ -14,6 +14,7 @@ final class RsaSha384Signer extends Rsa
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function getAlgorithm(): Algorithm
     {
         return Algorithm::RSA_SHA_384;

@@ -31,6 +31,7 @@ abstract class Rsa implements JwtSigner
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function updateJoseParams(array $params): array
     {
         $params[JoseHeaderParams::ALG->value] = $this->getAlgorithm()->value;
@@ -41,6 +42,7 @@ abstract class Rsa implements JwtSigner
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function createSignature(array $joseParams, array $claims): string
     {
         if ($this->private === null) {
@@ -63,6 +65,7 @@ abstract class Rsa implements JwtSigner
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function verifyToken(Jwt $token): bool
     {
         if ($this->public === null) {

@@ -14,6 +14,7 @@ final class RsaSha512Signer extends Rsa
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     protected function getAlgorithm(): Algorithm
     {
         return Algorithm::RSA_SHA_512;
