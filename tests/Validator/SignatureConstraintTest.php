@@ -12,7 +12,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * @internal
  */
-class SignatureConstraintTest extends BaseCase
+final class SignatureConstraintTest extends BaseCase
 {
     public function testCheckToken(): void
     {

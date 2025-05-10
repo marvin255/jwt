@@ -21,6 +21,7 @@ final class Token implements Jwt
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function jose(): JoseHeader
     {
         return $this->jose;
@@ -29,6 +30,7 @@ final class Token implements Jwt
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function claims(): ClaimSet
     {
         return $this->claims;
@@ -37,6 +39,7 @@ final class Token implements Jwt
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function signature(): Signature
     {
         return $this->signature;

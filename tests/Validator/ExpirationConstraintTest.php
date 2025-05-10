@@ -11,7 +11,7 @@ use Marvin255\Jwt\Validator\ExpirationConstraint;
 /**
  * @internal
  */
-class ExpirationConstraintTest extends BaseCase
+final class ExpirationConstraintTest extends BaseCase
 {
     public function testNegativeLeewayException(): void
     {
@@ -19,9 +19,7 @@ class ExpirationConstraintTest extends BaseCase
         new ExpirationConstraint(-1);
     }
 
-    /**
-     * @dataProvider checkTokenProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('checkTokenProvider')]
     public function testCheckToken(?int $timeAdd, int $leeway, bool $expected): void
     {
         $jose = [];

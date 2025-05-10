@@ -28,6 +28,7 @@ abstract class Hmac implements JwtSigner
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function updateJoseParams(array $params): array
     {
         $params[JoseHeaderParams::ALG->value] = $this->getAlgorithm()->value;
@@ -38,6 +39,7 @@ abstract class Hmac implements JwtSigner
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function createSignature(array $joseParams, array $claims): string
     {
         $data = Base64::arrayEncode($joseParams) . '.' . Base64::arrayEncode($claims);
@@ -52,6 +54,7 @@ abstract class Hmac implements JwtSigner
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function verifyToken(Jwt $token): bool
     {
         $tokenSignature = $token->signature()->getSignatureString();

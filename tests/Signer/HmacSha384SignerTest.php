@@ -13,7 +13,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * @internal
  */
-class HmacSha384SignerTest extends BaseCase
+final class HmacSha384SignerTest extends BaseCase
 {
     public function testUpdateJoseParams(): void
     {

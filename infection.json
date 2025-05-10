@@ -9,6 +9,11 @@
         "text": "infection.log"
     },
     "mutators": {
-        "@default": true
+        "@default": true,
+        "FalseValue": {
+            "ignore": [
+                "Marvin255\\Jwt\\Signer\\SecretBase::getSecret"
+            ]
+        }
     }
 }

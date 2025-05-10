@@ -14,7 +14,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * @internal
  */
-class ValidatorTest extends BaseCase
+final class ValidatorTest extends BaseCase
 {
     public function testWrongConstructorConstraintException(): void
     {

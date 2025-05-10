@@ -10,7 +10,7 @@ use Marvin255\Jwt\Test\BaseCase;
 /**
  * @internal
  */
-class EncoderTest extends BaseCase
+final class EncoderTest extends BaseCase
 {
     public function testEncode(): void
     {

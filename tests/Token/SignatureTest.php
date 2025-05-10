@@ -10,7 +10,7 @@ use Marvin255\Jwt\Token\Signature;
 /**
  * @internal
  */
-class SignatureTest extends BaseCase
+final class SignatureTest extends BaseCase
 {
     public function testGetSignatureString(): void
     {

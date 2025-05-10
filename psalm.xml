@@ -10,20 +10,14 @@
     <projectFiles>
         <directory name="./src"/>
         <directory name="./tests"/>
-        <ignoreFiles>
-        </ignoreFiles>
     </projectFiles>
 
     <issueHandlers>
         <MixedAssignment errorLevel="suppress"/>
-        <MissingClassConstType errorLevel="suppress"/>
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
                 <directory name="./tests"/>
             </errorLevel>
         </PropertyNotSetInConstructor>
     </issueHandlers>
-
-    <plugins>
-    </plugins>
 </psalm>

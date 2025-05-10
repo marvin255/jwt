@@ -22,6 +22,7 @@ final class Decoder implements JwtDecoder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function decodeString(string $tokenString): Jwt
     {
         $tokenParts = $this->explodeToken($tokenString);
@@ -44,6 +45,7 @@ final class Decoder implements JwtDecoder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function decodeHeader(string $httpHeader): Jwt
     {
         if (!preg_match('/Bearer\s(.+)/i', $httpHeader, $matches)) {

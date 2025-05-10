@@ -23,6 +23,7 @@ final class ExpirationConstraint implements Constraint
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function checkToken(Jwt $token): bool
     {
         $expHeader = $token->claims()->exp();
@@ -37,6 +38,7 @@ final class ExpirationConstraint implements Constraint
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function createErrorMessage(Jwt $token): string
     {
         return 'Token is expired.';

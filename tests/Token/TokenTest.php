@@ -10,7 +10,7 @@ use Marvin255\Jwt\Token\Token;
 /**
  * @internal
  */
-class TokenTest extends BaseCase
+final class TokenTest extends BaseCase
 {
     public function testJose(): void
     {

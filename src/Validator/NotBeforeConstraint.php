@@ -23,6 +23,7 @@ final class NotBeforeConstraint implements Constraint
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function checkToken(Jwt $token): bool
     {
         $nbfHeader = $token->claims()->nbf();
@@ -37,6 +38,7 @@ final class NotBeforeConstraint implements Constraint
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function createErrorMessage(Jwt $token): string
     {
         return 'Token is nor allowed to use yet. Need wait for some time.';

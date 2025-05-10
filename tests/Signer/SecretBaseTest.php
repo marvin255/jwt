@@ -11,7 +11,7 @@ use Marvin255\Jwt\Test\BaseCase;
 /**
  * @internal
  */
-class SecretBaseTest extends BaseCase
+final class SecretBaseTest extends BaseCase
 {
     public function testGetSecret(): void
     {

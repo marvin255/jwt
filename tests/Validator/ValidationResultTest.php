@@ -10,7 +10,7 @@ use Marvin255\Jwt\Validator\ValidationResult;
 /**
  * @internal
  */
-class ValidationResultTest extends BaseCase
+final class ValidationResultTest extends BaseCase
 {
     public function testIsValid(): void
     {

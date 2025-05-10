@@ -9,7 +9,7 @@ use Marvin255\Jwt\JwtSecretFactory;
 /**
  * @internal
  */
-class JwtSecretFactoryTest extends BaseCase
+final class JwtSecretFactoryTest extends BaseCase
 {
     public function testCreate(): void
     {

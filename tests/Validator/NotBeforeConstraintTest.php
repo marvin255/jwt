@@ -11,7 +11,7 @@ use Marvin255\Jwt\Validator\NotBeforeConstraint;
 /**
  * @internal
  */
-class NotBeforeConstraintTest extends BaseCase
+final class NotBeforeConstraintTest extends BaseCase
 {
     public function testNegativeLeewayException(): void
     {
@@ -19,9 +19,7 @@ class NotBeforeConstraintTest extends BaseCase
         new NotBeforeConstraint(-1);
     }
 
-    /**
-     * @dataProvider checkTokenProvider
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('checkTokenProvider')]
     public function testCheckToken(?int $timeAdd, int $leeway, bool $expected): void
     {
         $jose = [];

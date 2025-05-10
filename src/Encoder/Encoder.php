@@ -16,6 +16,7 @@ final class Encoder implements JwtEncoder
     /**
      * {@inheritDoc}
      */
+    #[\Override]
     public function encode(Jwt $token): string
     {
         $tokenParts = [

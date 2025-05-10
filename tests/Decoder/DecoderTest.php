@@ -15,11 +15,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * @internal
  */
-class DecoderTest extends BaseCase
+final class DecoderTest extends BaseCase
 {
-    /**
-     * @dataProvider provideDecodeHeader
-     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideDecodeHeader')]
     public function testDecodeHeader(string $tokenString, array $awaitedJose, array $awaitedClaims, string $awaitedSignature): void
     {
         $awaitedToken = $this->getMockBuilder(Jwt::class)->getMock();
