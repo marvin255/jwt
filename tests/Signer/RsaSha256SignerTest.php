@@ -68,7 +68,7 @@ final class RsaSha256SignerTest extends BaseCase
     {
         $jose = ['test_jose' => 'test jose value'];
         $claims = ['test_claim' => 'test claim value'];
-        $signature = file_get_contents(__DIR__ . '/_fixtures/RsaSha256SignerTest_signature.txt');
+        $signature = (string) file_get_contents(__DIR__ . '/_fixtures/RsaSha256SignerTest_signature.txt');
         $token = $this->getTokenMock($jose, $claims, $signature);
 
         $public = $this->getPublicKey();
