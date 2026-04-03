@@ -9,7 +9,6 @@ use Marvin255\Jwt\Signer\RsaSha384Signer;
 use Marvin255\Jwt\Signer\Secret;
 use Marvin255\Jwt\Test\BaseCase;
 use Marvin255\Jwt\Token\JoseHeaderParams;
-use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * @internal
@@ -127,7 +126,6 @@ final class RsaSha384SignerTest extends BaseCase
 
     private function getPublicKey(): Secret
     {
-        /** @var Stub&Secret */
         $public = $this->createStub(Secret::class);
         $public->method('getSecret')->willReturn(
             file_get_contents(__DIR__ . '/_fixtures/RsaSha384SignerTest_public.key')
@@ -138,7 +136,6 @@ final class RsaSha384SignerTest extends BaseCase
 
     private function getPrivateKey(): Secret
     {
-        /** @var Stub&Secret */
         $private = $this->createStub(Secret::class);
         $private->method('getSecret')->willReturn(
             file_get_contents(__DIR__ . '/_fixtures/RsaSha384SignerTest_private.key')

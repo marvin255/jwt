@@ -7,7 +7,6 @@ namespace Marvin255\Jwt\Test\Token;
 use Marvin255\Jwt\Builder\Builder;
 use Marvin255\Jwt\JwtSigner;
 use Marvin255\Jwt\Test\BaseCase;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
@@ -201,7 +200,6 @@ final class BuilderTest extends BaseCase
 
         $signature = 'signature';
 
-        /** @var MockObject&JwtSigner */
         $signer = $this->getMockBuilder(JwtSigner::class)->getMock();
         $signer->expects($this->once())
             ->method('updateJoseParams')

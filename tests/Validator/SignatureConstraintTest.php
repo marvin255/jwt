@@ -7,8 +7,6 @@ namespace Marvin255\Jwt\Test\Validator;
 use Marvin255\Jwt\JwtSigner;
 use Marvin255\Jwt\Test\BaseCase;
 use Marvin255\Jwt\Validator\SignatureConstraint;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * @internal
@@ -19,7 +17,6 @@ final class SignatureConstraintTest extends BaseCase
     {
         $token = $this->getTokenMock();
 
-        /** @var MockObject&JwtSigner */
         $signer = $this->getMockBuilder(JwtSigner::class)->getMock();
         $signer->expects($this->once())
             ->method('verifyToken')
@@ -38,7 +35,6 @@ final class SignatureConstraintTest extends BaseCase
     {
         $token = $this->getTokenMock();
 
-        /** @var MockObject&JwtSigner */
         $signer = $this->getMockBuilder(JwtSigner::class)->getMock();
         $signer->expects($this->once())
             ->method('verifyToken')
@@ -56,7 +52,7 @@ final class SignatureConstraintTest extends BaseCase
     public function testCreateErrorMessage(): void
     {
         $token = $this->getTokenMock();
-        /** @var Stub&JwtSigner */
+
         $signer = $this->createStub(JwtSigner::class);
 
         $constraint = new SignatureConstraint($signer);
