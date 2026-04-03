@@ -21,7 +21,7 @@ final class HmacSha256SignerTest extends BaseCase
         $awaitedJose = ['test' => 'test value', JoseHeaderParams::ALG->value => 'HS256'];
 
         /** @var MockObject&Secret */
-        $secret = $this->getMockBuilder(Secret::class)->getMock();
+        $secret = $this->createStub(Secret::class);
 
         $signer = new HmacSha256Signer($secret);
         $updatedJose = $signer->updateJoseParams($jose);
@@ -38,7 +38,7 @@ final class HmacSha256SignerTest extends BaseCase
         $secretString = 'test secret';
         /** @var MockObject&Secret */
         $secret = $this->getMockBuilder(Secret::class)->getMock();
-        $secret->method('getSecret')->willReturn($secretString);
+        $secret->expects($this->once())->method('getSecret')->willReturn($secretString);
 
         $signer = new HmacSha256Signer($secret);
         $signature = $signer->createSignature($jose, $claims);
@@ -56,7 +56,7 @@ final class HmacSha256SignerTest extends BaseCase
         $secretString = 'test secret';
         /** @var MockObject&Secret */
         $secret = $this->getMockBuilder(Secret::class)->getMock();
-        $secret->method('getSecret')->willReturn($secretString);
+        $secret->expects($this->once())->method('getSecret')->willReturn($secretString);
 
         $signer = new HmacSha256Signer($secret);
         $isVerified = $signer->verifyToken($token);
@@ -74,7 +74,7 @@ final class HmacSha256SignerTest extends BaseCase
         $secretString = 'test secret';
         /** @var MockObject&Secret */
         $secret = $this->getMockBuilder(Secret::class)->getMock();
-        $secret->method('getSecret')->willReturn($secretString);
+        $secret->expects($this->once())->method('getSecret')->willReturn($secretString);
 
         $signer = new HmacSha256Signer($secret);
         $isVerified = $signer->verifyToken($token);

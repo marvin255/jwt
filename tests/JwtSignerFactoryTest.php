@@ -69,7 +69,7 @@ final class JwtSignerFactoryTest extends BaseCase
     private function createSecretMock(): Secret
     {
         /** @var Secret&MockObject */
-        $secret = $this->getMockBuilder(Secret::class)->getMock();
+        $secret = $this->createStub(Secret::class);
 
         return $secret;
     }

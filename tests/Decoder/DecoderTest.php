@@ -20,7 +20,7 @@ final class DecoderTest extends BaseCase
     #[\PHPUnit\Framework\Attributes\DataProvider('provideDecodeHeader')]
     public function testDecodeHeader(string $tokenString, array $awaitedJose, array $awaitedClaims, string $awaitedSignature): void
     {
-        $awaitedToken = $this->getMockBuilder(Jwt::class)->getMock();
+        $awaitedToken = $this->createStub(Jwt::class);
 
         /** @var MockObject&JwtBuilder */
         $builder = $this->getMockBuilder(JwtBuilder::class)->getMock();
@@ -110,7 +110,7 @@ final class DecoderTest extends BaseCase
     public function testDecodeHeaderWrongHeaderException(): void
     {
         /** @var MockObject&JwtBuilder */
-        $builder = $this->getMockBuilder(JwtBuilder::class)->getMock();
+        $builder = $this->createStub(JwtBuilder::class);
 
         $decoder = new Decoder($builder);
 
@@ -121,7 +121,7 @@ final class DecoderTest extends BaseCase
     public function testIncompleteTokenException(): void
     {
         /** @var MockObject&JwtBuilder */
-        $builder = $this->getMockBuilder(JwtBuilder::class)->getMock();
+        $builder = $this->createStub(JwtBuilder::class);
 
         $decoder = new Decoder($builder);
 
@@ -132,7 +132,7 @@ final class DecoderTest extends BaseCase
     public function testBadJsonException(): void
     {
         /** @var MockObject&JwtBuilder */
-        $builder = $this->getMockBuilder(JwtBuilder::class)->getMock();
+        $builder = $this->createStub(JwtBuilder::class);
 
         $decoder = new Decoder($builder);
 
