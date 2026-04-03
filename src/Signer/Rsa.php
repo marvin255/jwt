@@ -98,7 +98,7 @@ abstract class Rsa implements JwtSigner
             $secret->getPassPhrase()
         );
 
-        if (!($key instanceof \OpenSSLAsymmetricKey)) {
+        if (!$key instanceof \OpenSSLAsymmetricKey) {
             throw new SecretKeyIsInvalid('Private key for RSA is invalid or malformed. Correct PEM key is required');
         }
 
@@ -112,7 +112,7 @@ abstract class Rsa implements JwtSigner
     {
         $key = openssl_pkey_get_public($secret->getSecret());
 
-        if (!($key instanceof \OpenSSLAsymmetricKey)) {
+        if (!$key instanceof \OpenSSLAsymmetricKey) {
             throw new SecretKeyIsInvalid('Public key for RSA is invalid or malformed. Correct PEM key is required');
         }
 

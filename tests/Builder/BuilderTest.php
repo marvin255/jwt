@@ -203,13 +203,15 @@ final class BuilderTest extends BaseCase
 
         /** @var MockObject&JwtSigner */
         $signer = $this->getMockBuilder(JwtSigner::class)->getMock();
-        $signer->method('updateJoseParams')
+        $signer->expects($this->once())
+            ->method('updateJoseParams')
             ->with(
                 $this->equalTo($joseArray)
             )
             ->willReturn($joseArrayWithAlg)
         ;
-        $signer->method('createSignature')
+        $signer->expects($this->once())
+            ->method('createSignature')
             ->with(
                 $this->equalTo($joseArrayWithAlg),
                 $this->equalTo($claims)

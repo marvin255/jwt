@@ -20,7 +20,8 @@ final class SignatureConstraintTest extends BaseCase
 
         /** @var MockObject&JwtSigner */
         $signer = $this->getMockBuilder(JwtSigner::class)->getMock();
-        $signer->method('verifyToken')
+        $signer->expects($this->once())
+            ->method('verifyToken')
             ->with(
                 $this->identicalTo($token)
             )
@@ -38,7 +39,8 @@ final class SignatureConstraintTest extends BaseCase
 
         /** @var MockObject&JwtSigner */
         $signer = $this->getMockBuilder(JwtSigner::class)->getMock();
-        $signer->method('verifyToken')
+        $signer->expects($this->once())
+            ->method('verifyToken')
             ->with(
                 $this->identicalTo($token)
             )
