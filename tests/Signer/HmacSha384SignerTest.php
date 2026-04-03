@@ -8,7 +8,6 @@ use Marvin255\Jwt\Signer\HmacSha384Signer;
 use Marvin255\Jwt\Signer\Secret;
 use Marvin255\Jwt\Test\BaseCase;
 use Marvin255\Jwt\Token\JoseHeaderParams;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
@@ -20,8 +19,7 @@ final class HmacSha384SignerTest extends BaseCase
         $jose = ['test' => 'test value'];
         $awaitedJose = ['test' => 'test value', JoseHeaderParams::ALG->value => 'HS384'];
 
-        /** @var MockObject&Secret */
-        $secret = $this->getMockBuilder(Secret::class)->getMock();
+        $secret = $this->createStub(Secret::class);
 
         $signer = new HmacSha384Signer($secret);
         $updatedJose = $signer->updateJoseParams($jose);
@@ -36,9 +34,9 @@ final class HmacSha384SignerTest extends BaseCase
         $awaitedSignature = 'b8b6fb84d68ae0915bd3b7bf55525b222e5071020e175aee5fc4a950c9b37c55d484a6be5e12d661389e31a72d1a1c58';
 
         $secretString = 'test secret';
-        /** @var MockObject&Secret */
+
         $secret = $this->getMockBuilder(Secret::class)->getMock();
-        $secret->method('getSecret')->willReturn($secretString);
+        $secret->expects($this->once())->method('getSecret')->willReturn($secretString);
 
         $signer = new HmacSha384Signer($secret);
         $signature = $signer->createSignature($jose, $claims);
@@ -54,9 +52,9 @@ final class HmacSha384SignerTest extends BaseCase
         $token = $this->getTokenMock($jose, $claims, $signature);
 
         $secretString = 'test secret';
-        /** @var MockObject&Secret */
+
         $secret = $this->getMockBuilder(Secret::class)->getMock();
-        $secret->method('getSecret')->willReturn($secretString);
+        $secret->expects($this->once())->method('getSecret')->willReturn($secretString);
 
         $signer = new HmacSha384Signer($secret);
         $isVerified = $signer->verifyToken($token);
@@ -72,9 +70,9 @@ final class HmacSha384SignerTest extends BaseCase
         $token = $this->getTokenMock($jose, $claims, $signature);
 
         $secretString = 'test secret';
-        /** @var MockObject&Secret */
+
         $secret = $this->getMockBuilder(Secret::class)->getMock();
-        $secret->method('getSecret')->willReturn($secretString);
+        $secret->expects($this->once())->method('getSecret')->willReturn($secretString);
 
         $signer = new HmacSha384Signer($secret);
         $isVerified = $signer->verifyToken($token);

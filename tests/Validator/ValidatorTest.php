@@ -9,7 +9,6 @@ use Marvin255\Jwt\Jwt;
 use Marvin255\Jwt\Test\BaseCase;
 use Marvin255\Jwt\Validator\Constraint;
 use Marvin255\Jwt\Validator\Validator;
-use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @internal
@@ -71,7 +70,7 @@ final class ValidatorTest extends BaseCase
     public function testValidateSingleConstraint(): void
     {
         $token = $this->getTokenMock();
-        /** @var Constraint&MockObject */
+
         $constraint = $this->getMockBuilder(Constraint::class)->getMock();
         $constraint->expects($this->once())
             ->method('checkToken')
@@ -92,7 +91,6 @@ final class ValidatorTest extends BaseCase
      */
     private function createValidConstraintsForToken(Jwt $token): array
     {
-        /** @var Constraint&MockObject */
         $constraint = $this->getMockBuilder(Constraint::class)->getMock();
         $constraint->expects($this->once())
             ->method('checkToken')
@@ -102,7 +100,6 @@ final class ValidatorTest extends BaseCase
             ->willReturn(true);
         $constraint->expects($this->never())->method('createErrorMessage');
 
-        /** @var Constraint&MockObject */
         $constraint1 = $this->getMockBuilder(Constraint::class)->getMock();
         $constraint1->expects($this->once())
             ->method('checkToken')
@@ -120,7 +117,6 @@ final class ValidatorTest extends BaseCase
      */
     private function createInvalidConstraintsForToken(Jwt $token): array
     {
-        /** @var Constraint&MockObject */
         $constraint = $this->getMockBuilder(Constraint::class)->getMock();
         $constraint->expects($this->once())
             ->method('checkToken')
@@ -130,7 +126,6 @@ final class ValidatorTest extends BaseCase
             ->willReturn(true);
         $constraint->expects($this->never())->method('createErrorMessage');
 
-        /** @var Constraint&MockObject */
         $constraint1 = $this->getMockBuilder(Constraint::class)->getMock();
         $constraint1->expects($this->once())
             ->method('checkToken')
@@ -145,7 +140,6 @@ final class ValidatorTest extends BaseCase
             )
             ->willReturn('error');
 
-        /** @var Constraint&MockObject */
         $constraint2 = $this->getMockBuilder(Constraint::class)->getMock();
         $constraint2->expects($this->never())->method('checkToken');
 

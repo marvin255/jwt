@@ -8,7 +8,7 @@ Simple [JWT](https://tools.ietf.org/html/rfc7519) implementation for PHP.
 
 ## Installation
 
-Install package via composer
+Install the package via Composer
 
 ```shell
 composer req marvin255/jwt
